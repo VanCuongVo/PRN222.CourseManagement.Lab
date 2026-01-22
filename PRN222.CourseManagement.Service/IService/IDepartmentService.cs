@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PRN222.CourseManagement.Repository.Models;
+using PRN222.CourseManagement.Service.DTO.Request;
 
 namespace PRN222.CourseManagement.Service.IService
 {
-    public interface IDepartmentService
+    public interface IDepartmentService : IBaseService<Department>
     {
-
     }
 }

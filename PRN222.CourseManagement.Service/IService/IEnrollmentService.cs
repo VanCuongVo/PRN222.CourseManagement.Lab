@@ -1,6 +1,8 @@
-﻿namespace PRN222.CourseManagement.Service.IService
+﻿using PRN222.CourseManagement.Repository.Models;
+
+namespace PRN222.CourseManagement.Service.IService
 {
-    public interface IEnrollmentService
+    public interface IEnrollmentService : IBaseService<Enrollment>
     {
 
     }
