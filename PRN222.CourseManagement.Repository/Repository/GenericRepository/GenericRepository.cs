@@ -1,4 +1,6 @@
-﻿using PRN222.CourseManagement.Repository.IRepository.IGenericRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using PRN222.CourseManagement.Repository.IRepository.IGenericRepository;
 using PRN222.CourseManagement.Repository.Models;
 
 namespace PRN222.CourseManagement.Repository.Repository.GenericRepository
@@ -41,6 +43,11 @@ namespace PRN222.CourseManagement.Repository.Repository.GenericRepository
         public void Update(T entity)
         {
             _courseManagementDbContext.Set<T>().Update(entity);
+        }
+
+        public bool Exists(Expression<Func<T, bool>> predicate)
+        {
+            return _courseManagementDbContext.Set<T>().Any(predicate);
         }
     }
 }
