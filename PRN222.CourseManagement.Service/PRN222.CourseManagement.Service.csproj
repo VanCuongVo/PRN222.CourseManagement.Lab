@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PRN222.CourseManagement.Repository\PRN222.CourseManagement.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="IService\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+</Project>
