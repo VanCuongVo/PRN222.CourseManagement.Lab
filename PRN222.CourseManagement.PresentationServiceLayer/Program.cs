@@ -98,17 +98,26 @@ namespace PRN222.CourseManagement.PresentationServiceLayer
         // ================= FEATURES =================
         static void CreateStudent(IStudentService service)
         {
+            Console.Write("Student code: ");
+            string code = Console.ReadLine();   
+
             Console.Write("Full name: ");
             string name = Console.ReadLine();
 
             Console.Write("Email: ");
             string email = Console.ReadLine();
 
-            Console.Write("Department Id: ");
-            int deptId = int.Parse(Console.ReadLine());
+            int deptId;
+            while (true)
+            {
+                Console.Write("Department Id: ");
+                if (int.TryParse(Console.ReadLine(), out deptId))
+                    break;
+            }
 
             var result = service.Create(new Student
             {
+                StudentCode = code,
                 FullName = name,
                 Email = email,
                 DepartmentId = deptId
@@ -119,17 +128,32 @@ namespace PRN222.CourseManagement.PresentationServiceLayer
 
         static void CreateCourse(ICourseService service)
         {
+            Console.Write("Course code: ");
+            string code = Console.ReadLine();
+
             Console.Write("Course title: ");
             string title = Console.ReadLine();
 
-            Console.Write("Credits: ");
-            int credits = int.Parse(Console.ReadLine());
+            int credits;
+            while (true)
+            {
+                Console.Write("Credits: ");
+                if (int.TryParse(Console.ReadLine(), out credits))
+                    break;
+            }
 
-            Console.Write("Department Id: ");
-            int deptId = int.Parse(Console.ReadLine());
+            int deptId;
+            while (true)
+            {
+                Console.Write("Department Id: ");
+                if (int.TryParse(Console.ReadLine(), out deptId))
+                    break;
+            }
+
 
             var result = service.Create(new Course
             {
+                CourseCode = code,
                 Title = title,
                 Credits = credits,
                 DepartmentId = deptId
@@ -140,11 +164,22 @@ namespace PRN222.CourseManagement.PresentationServiceLayer
 
         static void EnrollStudent(IEnrollmentService service)
         {
-            Console.Write("Student Id: ");
-            int studentId = int.Parse(Console.ReadLine());
+            int studentId;
+            while (true)
+            {
+                Console.Write("Student Id: ");
+                if (int.TryParse(Console.ReadLine(), out studentId))
+                    break;
+            }
 
-            Console.Write("Course Id: ");
-            int courseId = int.Parse(Console.ReadLine());
+            int courseId;
+            while (true)
+            {
+                Console.Write("Course Id: ");
+                if (int.TryParse(Console.ReadLine(), out courseId))
+                    break;
+            }
+
 
             var result = service.Create(new Enrollment
             {
@@ -158,14 +193,30 @@ namespace PRN222.CourseManagement.PresentationServiceLayer
 
         static void AssignGrade(IEnrollmentService service)
         {
+            int studentId;
+            while (true)
+            {
+                Console.Write("Student Id: ");
+                if (int.TryParse(Console.ReadLine(), out studentId))
+                    break;
+            }
 
-
+            int courseId;
+            while (true)
+            {
+                Console.Write("Course Id: ");
+                if (int.TryParse(Console.ReadLine(), out courseId))
+                    break;
+            }
             Console.Write("Grade: ");
             decimal grade = decimal.Parse(Console.ReadLine());
 
             var enrollment = new Enrollment
             {
-                Grade = grade
+                StudentId = studentId,
+                CourseId = courseId,
+                Grade = grade,
+                EnrollDate= DateTime.Now
             };
 
             var result = service.Update(enrollment);
@@ -175,9 +226,9 @@ namespace PRN222.CourseManagement.PresentationServiceLayer
         static void PrintResult(dynamic result)
         {
             if (result.IsSuccess)
-                Console.WriteLine("✅ Success: " + result.Message);
+                Console.WriteLine("Success: " + result.Message);
             else
-                Console.WriteLine("❌ Failed: " + result.Message);
+                Console.WriteLine("Failed: " + result.Message);
         }
     }
 }
