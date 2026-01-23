@@ -15,15 +15,15 @@ using PRN222.CourseManagement.Repository.Repository.GenericRepository;
 using PRN222.CourseManagement.Repository.Repository.StudentRepositroy;
 using PRN222.CourseManagement.Repository.UnitOfWork;
 
-namespace PRN222.CourseManagement.ConsoleApp
+namespace PRN222.CourseManagementPresentation
 {
     public class Program
     {
         static void Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()
-     .AddJsonFile("appsettings.json")
-     .Build();
+  .AddJsonFile("appsettings.json")
+  .Build();
             var services = new ServiceCollection();
 
             services.AddDbContext<CourseManagementDbContext>(options =>
@@ -36,9 +36,13 @@ namespace PRN222.CourseManagement.ConsoleApp
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
+
+
             var serviceProvider = services.BuildServiceProvider();
             using var scope = serviceProvider.CreateScope();
             var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+
 
             while (true)
             {

@@ -33,5 +33,12 @@
         // BR24
         public const string TransactionFailed =
             "Enrollment transaction failed. All changes were rolled back.";
+
+        public const string GradeFinalized =
+    "Grade has been finalized and cannot be updated.";
+
+        public const string Updated =
+    "Enrollment updated successfully.";
+
     }
 }

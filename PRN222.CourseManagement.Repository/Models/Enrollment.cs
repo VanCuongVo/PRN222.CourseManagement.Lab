@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PRN222.CourseManagement.Repository.Models;
+﻿namespace PRN222.CourseManagement.Repository.Models;
 
 public partial class Enrollment
 {
