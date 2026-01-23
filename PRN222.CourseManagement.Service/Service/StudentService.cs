@@ -115,10 +115,20 @@ namespace PRN222.CourseManagement.Service.Service
         {
             ServiceResult result = new ServiceResult();
             var hasEnrollment = _unitOfWork.studentRepository.Exists(s => s.StudentId == id);
-            if (hasEnrollment)
+            if (!hasEnrollment)
             {
-                result.IsSuccess = true;
-                result.Message = MessageStudent.STUDENT_HAS_ENROLLMENTS;
+                result.IsSuccess = false;
+                result.Message = MessageStudent.STUDENT_NOT_FOUND;
+                return result;
+            }
+
+            bool haCourse = _unitOfWork.enrollementRepository
+                .Exists(e => e.CourseId == id);
+
+            if (haCourse)
+            {
+                result.IsSuccess = false;
+                result.Message = MessageHelper.MessageStudent.STUDENT_HAS_ENROLLMENTS;
                 return result;
             }
             return result ;

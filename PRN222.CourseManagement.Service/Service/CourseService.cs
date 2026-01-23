@@ -94,19 +94,27 @@ namespace PRN222.CourseManagement.Service.Service
         }
 
 
-        private ServiceResult ValidateCourseForDelete(int courseId)
+        private ServiceResult ValidateCourseForDelete(int id)
         {
             var result = new ServiceResult();
             // BR14: Cannot delete if students enrolled
             bool hasEnrollment = _unitOfWork.enrollementRepository
-                .Exists(e => e.CourseId == courseId);
+                .Exists(e => e.CourseId == id);
 
-            if (hasEnrollment)
+            if (!hasEnrollment)
             {
-                result.IsSuccess = true;
-                result.Message = MessageHelper.MessageCourse.COURSE_HAS_ENROLLMENTS;
+                result.IsSuccess = false;
+                result.Message = MessageHelper.MessageCourse.COURSE_NOT_FOUND;
                 return result;
             }
+
+            var isExist = _unitOfWork.studentRepository.Exists(e => e.StudentId == id);
+            if (isExist)
+            {
+                result.IsSuccess = false;
+                result.Message = MessageCourse.COURSE_HAS_ENROLLMENTS;
+
+            }    
 
             return result;
         }
