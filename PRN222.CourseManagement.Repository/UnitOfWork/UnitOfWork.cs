@@ -1,4 +1,6 @@
-﻿using PRN222.CourseManagement.Repository.IRepository.ICourseRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using PRN222.CourseManagement.Repository.IRepository.ICourseRepository;
 using PRN222.CourseManagement.Repository.IRepository.IDepartmentRepository;
 using PRN222.CourseManagement.Repository.IRepository.IEnrollmentRepository;
 using PRN222.CourseManagement.Repository.IRepository.StudentRepository;
@@ -32,5 +34,11 @@ namespace PRN222.CourseManagement.Repository.UnitOfWork
         {
             await _courseManagementDbContext.SaveChangesAsync();
         }
+
+        public IDbContextTransaction BeginTransaction()
+        {
+            return _courseManagementDbContext.Database.BeginTransaction();
+        }
+
     }
-    }
+}

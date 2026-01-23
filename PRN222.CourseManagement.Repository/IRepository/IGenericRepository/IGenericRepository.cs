@@ -11,5 +11,7 @@ namespace PRN222.CourseManagement.Repository.IRepository.IGenericRepository
         void Delete(object id);
 
         bool Exists(Expression<Func<T, bool>> predicate);
+
+        int Count(Expression<Func<T, bool>> predicate);
     }
 }

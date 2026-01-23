@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using PRN222.CourseManagement.Repository.IRepository.IGenericRepository;
 using PRN222.CourseManagement.Repository.Models;
 
@@ -8,10 +8,13 @@ namespace PRN222.CourseManagement.Repository.Repository.GenericRepository
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         public readonly CourseManagementDbContext _courseManagementDbContext;
+        protected readonly DbSet<T> _dbSet;
 
         public GenericRepository(CourseManagementDbContext courseManagementDbContext)
         {
             _courseManagementDbContext = courseManagementDbContext;
+            _dbSet = _courseManagementDbContext.Set<T>();
+
         }
 
         public void Add(T entity)
@@ -48,6 +51,11 @@ namespace PRN222.CourseManagement.Repository.Repository.GenericRepository
         public bool Exists(Expression<Func<T, bool>> predicate)
         {
             return _courseManagementDbContext.Set<T>().Any(predicate);
+        }
+
+        public int Count(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.Count(predicate);
         }
     }
 }
