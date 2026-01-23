@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN222.CourseManagement.Repository", "PRN222.CourseManagement.Repository\PRN222.CourseManagement.Repository.csproj", "{E07D6485-2ABB-41DA-B349-7D05EDABAB77}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositroy_Test", "Repositroy_Test\Repositroy_Test.csproj", "{3F716CED-F97F-4AD5-B6F8-60637B1AE8D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN222.CourseManagement.Service", "PRN222.CourseManagement.Service\PRN222.CourseManagement.Service.csproj", "{8D6D5017-CE80-4548-8A02-F503DAB329A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{3F716CED-F97F-4AD5-B6F8-60637B1AE8D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F716CED-F97F-4AD5-B6F8-60637B1AE8D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F716CED-F97F-4AD5-B6F8-60637B1AE8D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D6D5017-CE80-4548-8A02-F503DAB329A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D6D5017-CE80-4548-8A02-F503DAB329A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D6D5017-CE80-4548-8A02-F503DAB329A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D6D5017-CE80-4548-8A02-F503DAB329A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

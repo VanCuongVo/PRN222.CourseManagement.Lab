@@ -47,6 +47,7 @@ namespace PRN222.CourseManagement.Service.Service
             {
                 result.IsSuccess = false;
                 result.Message = MessageHelper.MessageCourse.COURSE_CODE_DUPLICATED;
+                return result;
 
             }
             // BR12: Department exists
@@ -55,6 +56,7 @@ namespace PRN222.CourseManagement.Service.Service
             {
                 result.IsSuccess = false;
                 result.Message = MessageHelper.MessageCourse.COURSE_DEPARTMENT_REQUIRED;
+                return result;
             }
 
             // BR13: Credits between 1 and 6
@@ -62,6 +64,7 @@ namespace PRN222.CourseManagement.Service.Service
             {
                 result.IsSuccess = false;
                 result.Message = MessageHelper.MessageCourse.COURSE_CREDITS_INVALID;
+                return result;
             }
 
             return result;
@@ -102,6 +105,7 @@ namespace PRN222.CourseManagement.Service.Service
             {
                 result.IsSuccess = true;
                 result.Message = MessageHelper.MessageCourse.COURSE_HAS_ENROLLMENTS;
+                return result;
             }
 
             return result;
@@ -128,6 +132,7 @@ namespace PRN222.CourseManagement.Service.Service
                 {
                     result.IsSuccess = false;
                     result.Message = MessageHelper.MessageCourse.COURSE_NOT_FOUND;
+                    return result;
                 }
 
                 // Update fields
@@ -159,6 +164,7 @@ namespace PRN222.CourseManagement.Service.Service
             {
                 result.IsSuccess = false;
                 result.Message = MessageHelper.MessageCourse.COURSE_NOT_FOUND;
+                return result;
             }
 
             // BR12: Department exists
@@ -167,6 +173,7 @@ namespace PRN222.CourseManagement.Service.Service
             {
                 result.IsSuccess = false;
                 result.Message = MessageHelper.MessageCourse.COURSE_DEPARTMENT_REQUIRED;
+                return result;
             }
 
             // BR13: Credits between 1 and 6
@@ -174,6 +181,7 @@ namespace PRN222.CourseManagement.Service.Service
             {
                 result.IsSuccess = false;
                 result.Message = MessageHelper.MessageCourse.COURSE_CREDITS_INVALID;
+                return result;
             }
 
             return result;
