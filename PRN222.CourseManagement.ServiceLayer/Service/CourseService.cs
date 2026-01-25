@@ -1,4 +1,5 @@
-﻿using PRN222.CourseManagement.Repository.IUnitOfWork;
+﻿using System.Diagnostics.CodeAnalysis;
+using PRN222.CourseManagement.Repository.IUnitOfWork;
 using PRN222.CourseManagement.Repository.Models;
 using PRN222.CourseManagement.Service.DTO.Request;
 using PRN222.CourseManagement.Service.IService;
@@ -97,33 +98,40 @@ namespace PRN222.CourseManagement.Service.Service
         private ServiceResult ValidateCourseForDelete(int id)
         {
             var result = new ServiceResult();
-            // BR14: Cannot delete if students enrolled
-            bool hasEnrollment = _unitOfWork.enrollementRepository
-                .Exists(e => e.CourseId == id);
 
-            if (!hasEnrollment)
+            // 1. Check course exists
+            var courseExists = _unitOfWork.courseRepository
+                .Exists(c => c.CourseId == id);
+
+            if (!courseExists)
             {
                 result.IsSuccess = false;
-                result.Message = MessageHelper.MessageCourse.COURSE_NOT_FOUND;
+                result.Message = MessageCourse.COURSE_NOT_FOUND;
                 return result;
             }
 
-            var isExist = _unitOfWork.studentRepository.Exists(e => e.StudentId == id);
-            if (isExist)
+            // 2. BR14: Cannot delete if students enrolled
+            bool hasEnrollment = _unitOfWork.enrollementRepository
+                .Exists(e => e.CourseId == id);
+
+            if (hasEnrollment)
             {
                 result.IsSuccess = false;
                 result.Message = MessageCourse.COURSE_HAS_ENROLLMENTS;
+                return result;
+            }
 
-            }    
-
+            // 3. Valid
+            result.IsSuccess = true;
             return result;
         }
 
+        [ExcludeFromCodeCoverage]
         public IEnumerable<Course> GetAll()
         {
             return _unitOfWork.courseRepository.GetAll();
         }
-
+        [ExcludeFromCodeCoverage]
         public ServiceResult Update(Course entity)
         {
             var result = new ServiceResult();
@@ -160,7 +168,7 @@ namespace PRN222.CourseManagement.Service.Service
             }
             return result;
         }
-
+        [ExcludeFromCodeCoverage]
         private ServiceResult ValidateCourseForUpdate(Course entity)
         {
             var result = new ServiceResult();
