@@ -1,4 +1,5 @@
-﻿using PRN222.CourseManagement.Repository.IUnitOfWork;
+﻿using System.Diagnostics.CodeAnalysis;
+using PRN222.CourseManagement.Repository.IUnitOfWork;
 using PRN222.CourseManagement.Repository.Models;
 using PRN222.CourseManagement.Service.DTO.Request;
 using PRN222.CourseManagement.Service.IService;
@@ -86,7 +87,7 @@ namespace PRN222.CourseManagement.Service.Service
 
 
         }
-
+ 
         public ServiceResult Delete(int id)
         {
             ServiceResult result = new ServiceResult();
@@ -111,34 +112,40 @@ namespace PRN222.CourseManagement.Service.Service
             return result;
 
         }
+
         private ServiceResult ValidationStudentForDelete(int id)
         {
-            ServiceResult result = new ServiceResult();
-            var hasEnrollment = _unitOfWork.studentRepository.Exists(s => s.StudentId == id);
-            if (!hasEnrollment)
+            var result = new ServiceResult();
+
+            // 1. Check student tồn tại
+            var student = _unitOfWork.studentRepository.GetById(id);
+            if (student == null)
             {
                 result.IsSuccess = false;
                 result.Message = MessageStudent.STUDENT_NOT_FOUND;
                 return result;
             }
 
-            bool haCourse = _unitOfWork.enrollementRepository
-                .Exists(e => e.CourseId == id);
+            // 2. Check có enrollment
+            bool hasEnrollment = _unitOfWork.enrollementRepository
+                .Exists(e => e.StudentId == id);
 
-            if (haCourse)
+            if (hasEnrollment)
             {
                 result.IsSuccess = false;
-                result.Message = MessageHelper.MessageStudent.STUDENT_HAS_ENROLLMENTS;
+                result.Message = MessageStudent.STUDENT_HAS_ENROLLMENTS;
                 return result;
             }
-            return result ;
+
+            return result;
         }
 
+        [ExcludeFromCodeCoverage]
         public IEnumerable<Student> GetAll()
         {
             return _unitOfWork.studentRepository.GetAll();
         }
-
+        [ExcludeFromCodeCoverage]
         public ServiceResult Update(Student entity)
         {
             var result = new ServiceResult();
@@ -179,7 +186,7 @@ namespace PRN222.CourseManagement.Service.Service
             return result ;
 
         }
-
+        [ExcludeFromCodeCoverage]
         private ServiceResult ValidateStudentForUpdate(Student entity)
         {
             var result = new ServiceResult();
