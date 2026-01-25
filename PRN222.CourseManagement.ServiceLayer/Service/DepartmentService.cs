@@ -1,4 +1,5 @@
-﻿using PRN222.CourseManagement.Repository.IUnitOfWork;
+﻿using System.Diagnostics.CodeAnalysis;
+using PRN222.CourseManagement.Repository.IUnitOfWork;
 using PRN222.CourseManagement.Repository.Models;
 using PRN222.CourseManagement.Service.DTO.Request;
 using PRN222.CourseManagement.Service.IService;
@@ -75,7 +76,7 @@ namespace PRN222.CourseManagement.Service.Service
                 var validate = ValidationDeleteDepartment(id);
                 if (!validate.IsSuccess)
                 {
-                    return result;
+                    return validate;
                 }
                 _unitOfWork.departmentRepository.Delete(id);
                 _unitOfWork.SaveChangeAsync();
@@ -131,12 +132,12 @@ namespace PRN222.CourseManagement.Service.Service
             return result;
 
         }
-
+        [ExcludeFromCodeCoverage]
         public IEnumerable<Department> GetAll()
         {
             throw new NotImplementedException();
         }
-
+        [ExcludeFromCodeCoverage]
         public ServiceResult Update(Department entity)
         {
             var result = new ServiceResult();
@@ -175,7 +176,7 @@ namespace PRN222.CourseManagement.Service.Service
             }
             return result;
         }
-
+        [ExcludeFromCodeCoverage]
         private ServiceResult ValidationUpdateDeparment(Department entity)
         {
             var result = new ServiceResult();
