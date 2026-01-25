@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using PRN222.CourseManagement.Repository.IRepository.IGenericRepository;
 using PRN222.CourseManagement.Repository.Models;
@@ -53,6 +54,7 @@ namespace PRN222.CourseManagement.Repository.Repository.GenericRepository
             return _courseManagementDbContext.Set<T>().Any(predicate);
         }
 
+        [ExcludeFromCodeCoverage]
         public int Count(Expression<Func<T, bool>> predicate)
         {
             return _dbSet.Count(predicate);

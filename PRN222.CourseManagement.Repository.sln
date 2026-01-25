@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN222.CourseManagement.Pre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN222.CourseManagement.ServiceLayer", "PRN222.CourseManagement.ServiceLayer\PRN222.CourseManagement.ServiceLayer.csproj", "{C714DD5D-962F-49C4-A2C0-CB817579498D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN222.CourseManagement.RepositoryTest", "PRN222.CourseManagement.RepositoryTest\PRN222.CourseManagement.RepositoryTest.csproj", "{B9101C41-CEF0-41DD-97C6-CCB15E71822E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C714DD5D-962F-49C4-A2C0-CB817579498D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C714DD5D-962F-49C4-A2C0-CB817579498D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C714DD5D-962F-49C4-A2C0-CB817579498D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9101C41-CEF0-41DD-97C6-CCB15E71822E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9101C41-CEF0-41DD-97C6-CCB15E71822E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9101C41-CEF0-41DD-97C6-CCB15E71822E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9101C41-CEF0-41DD-97C6-CCB15E71822E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
