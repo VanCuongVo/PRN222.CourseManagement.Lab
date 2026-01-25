@@ -121,8 +121,6 @@ namespace PRN222.CourseManagement.Service.Service
                 return result;
             }
 
-            // 3. Valid
-            result.IsSuccess = true;
             return result;
         }
 

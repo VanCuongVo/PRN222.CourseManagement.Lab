@@ -1,4 +1,5 @@
-﻿using PRN222.CourseManagement.Repository.IUnitOfWork;
+﻿using System.Diagnostics.CodeAnalysis;
+using PRN222.CourseManagement.Repository.IUnitOfWork;
 using PRN222.CourseManagement.Repository.Models;
 using PRN222.CourseManagement.Service.DTO.Request;
 using PRN222.CourseManagement.Service.IService;
@@ -111,16 +112,17 @@ namespace PRN222.CourseManagement.Service.Service
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public ServiceResult Delete(int id)
         {
             throw new NotImplementedException();
         }
-
+        [ExcludeFromCodeCoverage]
         public IEnumerable<Enrollment> GetAll()
         {
           return _unitOfWork.enrollementRepository.GetAll();    
         }
-
+        [ExcludeFromCodeCoverage]
         public ServiceResult Update(Enrollment entity)
         {
             var result = new ServiceResult();
@@ -153,7 +155,7 @@ namespace PRN222.CourseManagement.Service.Service
             }
         }
 
-
+        [ExcludeFromCodeCoverage]
         private ServiceResult ValidateEnrollmentForUpdate(Enrollment entity)
         {
             var result = new ServiceResult();

@@ -3,10 +3,8 @@ using Moq;
 using PRN222.CourseManagement.Repository.IRepository.ICourseRepository;
 using PRN222.CourseManagement.Repository.IRepository.IDepartmentRepository;
 using PRN222.CourseManagement.Repository.IRepository.IEnrollmentRepository;
-using PRN222.CourseManagement.Repository.IRepository.StudentRepository;
 using PRN222.CourseManagement.Repository.IUnitOfWork;
 using PRN222.CourseManagement.Repository.Models;
-using PRN222.CourseManagement.Service.IService;
 using PRN222.CourseManagement.Service.MessageHelper;
 using PRN222.CourseManagement.Service.Service;
 
@@ -176,7 +174,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
             var result = _courseService.Delete(courseId);
 
-            Assert.IsFalse(result.IsSuccess);
+            Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(
                 MessageCourse.COURSE_DELETE_SUCCESS,
                 result.Message
