@@ -120,8 +120,6 @@ namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
             Assert.AreEqual("Advanced .NET", updatedCourse!.Title);
             Assert.AreEqual(4, updatedCourse.Credits);
         }
-
-
     }
 }
 
