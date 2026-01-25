@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using PRN222.CourseManagement.Repository.IRepository.ICourseRepository;
 using PRN222.CourseManagement.Repository.IRepository.IDepartmentRepository;
@@ -34,7 +35,7 @@ namespace PRN222.CourseManagement.Repository.UnitOfWork
         {
             await _courseManagementDbContext.SaveChangesAsync();
         }
-
+        [ExcludeFromCodeCoverage]
         public IDbContextTransaction BeginTransaction()
         {
             return _courseManagementDbContext.Database.BeginTransaction();
