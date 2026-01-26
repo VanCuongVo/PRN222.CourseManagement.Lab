@@ -4,6 +4,7 @@ using PRN222.CourseManagement.RepositoryTest.DBContext;
 
 namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
 {
+    [TestFixture]
     public class GenericStudentRepository_Test
     {
         [Test]
@@ -33,7 +34,7 @@ namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
                 Department = department
             };
 
-             repo.Add(student);
+            repo.Add(student);
             await ctx.SaveChangesAsync();
 
             //Act
@@ -143,10 +144,10 @@ namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
 
             var dept = new Department
             {
-               DepartmentId = 1,
+                DepartmentId = 1,
                 Name = "Software Engineering",
                 Description = "SE Department"
-                
+
             };
             ctx.Departments.Add(dept);
             await ctx.SaveChangesAsync();

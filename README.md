@@ -109,6 +109,82 @@ Ví dụ:
 * `Create_Enrollment_Duplicate_Fail`
 
 ---
+## 🧪 Test Status – TDD Validation (EnrollmentServiceV2)
+
+### Current Test Results
+
+![Test Explorer – TDD Red Phase](docs/images/test-explorer.png)
+
+> 📸![alt text](image.png)
+
+* **Total tests:** 47
+* **Passed:** 42 ✅
+* **Failed:** 5 ❌
+* **Skipped:** 0
+
+All 5 failed tests belong to **EnrollmentServiceV2Test**, which is **expected and intentional** at this stage because the project is following **strict TDD (Test-Driven Development)**.
+
+---
+
+### ❌ Failed Test Cases (Business Rules – TDD Red Phase)
+
+| Test Case | Description                         | Business Rule |
+| --------- | ----------------------------------- | ------------- |
+| TC26      | Enroll student under 18             | BR26          |
+| TC27      | Enroll into course with 0 credits   | BR27          |
+| TC28      | Enroll into inactive course         | BR28          |
+| TC29      | Enroll inactive student             | BR29          |
+| TC30      | Assign grade outside grading period | BR30          |
+
+These tests are written **before implementing business logic**, therefore they are currently failing (**Red phase**).
+
+---
+
+### 🔁 TDD Workflow Applied
+
+This project strictly follows the mandatory TDD process:
+
+1. **Red** – Write unit tests for new business rules (currently failing)
+2. **Green** – Implement minimum code to make tests pass
+3. **Refactor** – Improve code quality while keeping all tests passing
+
+⚠️ Writing production code before tests is **not allowed**.
+
+---
+
+### 📌 Next Steps
+
+* Implement business rules BR26 → BR30 in the Service layer
+* Ensure all failed tests pass (Green phase)
+* Refactor service logic if needed
+
+> The presence of failed tests at this stage confirms correct TDD implementation.
+
+
+## 🧪 Test Execution Result
+
+- **Total test cases**: 47  
+- **Passed**: 47  
+- **Failed**: 0  
+- **Skipped**: 0  
+- **Execution time**: ~1.1 seconds  
+
+✅ All unit tests passed successfully.
+![alt text](image-1.png)
+---
+
+## 🔧 Testing Environment
+
+- Framework: **.NET 8**
+- Unit Test: **NUnit**
+- Mocking: **Moq**
+- Architecture: **Repository Pattern**
+- Approach: **Test-Driven Development (TDD)**
+
+---
+
+
+
 
 ## 🚀 Cách chạy dự án
 

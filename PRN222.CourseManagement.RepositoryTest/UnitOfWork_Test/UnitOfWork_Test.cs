@@ -8,6 +8,7 @@ using PRN222.CourseManagement.Repository.UnitOfWork;
 
 namespace PRN222.CourseManagement.RepositoryTest.UnitOfWork_Test
 {
+    [TestFixture]
     public class UnitOfWork_Test
     {
         [Test]

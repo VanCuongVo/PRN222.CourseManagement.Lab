@@ -18,4 +18,5 @@ public partial class Course
     public virtual Department Department { get; set; } = null!;
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+    public bool IsActive { get; set; }
 }

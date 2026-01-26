@@ -54,15 +54,24 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 CourseId = 1,
                 EnrollDate = DateTime.Now
             };
-            //BR20: student tồn tại
             _studentRepoMock
-                .Setup(r => r.GetById(1))
-                .Returns(new Student { StudentId = 1, DepartmentId = 1 });
+     .Setup(r => r.GetById(1))
+     .Returns(new Student
+     {
+         StudentId = 1,
+         DepartmentId = 1,
+         IsActive = true
+     });
 
-            // BR20: course tồn tại
             _courseRepoMock
                 .Setup(r => r.GetById(1))
-                .Returns(new Course { CourseId = 1, DepartmentId = 1 });
+                .Returns(new Course
+                {
+                    CourseId = 1,
+                    DepartmentId = 2,
+                    IsActive = true,
+                    Credits = 3
+                });
 
 
 
@@ -89,15 +98,25 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 EnrollDate = DateTime.Now
             };
 
-            //BR20: student tồn tại
             _studentRepoMock
-                .Setup(r => r.GetById(1))
-                .Returns(new Student { StudentId = 1, DepartmentId = 1 });
+     .Setup(r => r.GetById(1))
+     .Returns(new Student
+     {
+         StudentId = 1,
+         DepartmentId = 1,
+         IsActive = true
+     });
 
-            // BR20: course tồn tại
             _courseRepoMock
                 .Setup(r => r.GetById(1))
-                .Returns(new Course { CourseId = 1, DepartmentId = 1 });
+                .Returns(new Course
+                {
+                    CourseId = 1,
+                    DepartmentId = 2,
+                    IsActive = true,
+                    Credits = 3
+                });
+
 
             // BR16: không trùng
             _enrollmentRepoMock
@@ -129,15 +148,24 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 EnrollDate = DateTime.Now.AddDays(-1)
             };
 
-            //BR20: student tồn tại
             _studentRepoMock
-                .Setup(r => r.GetById(1))
-                .Returns(new Student { StudentId = 1, DepartmentId = 1 });
+     .Setup(r => r.GetById(1))
+     .Returns(new Student
+     {
+         StudentId = 1,
+         DepartmentId = 1,
+         IsActive = true
+     });
 
-            // BR20: course tồn tại
             _courseRepoMock
                 .Setup(r => r.GetById(1))
-                .Returns(new Course { CourseId = 1, DepartmentId = 1 });
+                .Returns(new Course
+                {
+                    CourseId = 1,
+                    DepartmentId = 2,
+                    IsActive = true,
+                    Credits = 3
+                });
 
             var result = _enrollmentService.Create(enrollment);
 
@@ -160,12 +188,23 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
             };
 
             _studentRepoMock
-                .Setup(r => r.GetById(1))
-                .Returns(new Student { StudentId = 1, DepartmentId = 1 });
+      .Setup(r => r.GetById(1))
+      .Returns(new Student
+      {
+          StudentId = 1,
+          DepartmentId = 1,
+          IsActive = true
+      });
 
             _courseRepoMock
                 .Setup(r => r.GetById(1))
-                .Returns(new Course { CourseId = 1, DepartmentId = 2 });
+                .Returns(new Course
+                {
+                    CourseId = 1,
+                    DepartmentId = 2,
+                    IsActive = true,
+                    Credits = 3
+                });
 
             var result = _enrollmentService.Create(enrollment);
 
@@ -241,12 +280,23 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(u => u.BeginTransaction())
                 .Returns(transactionMock.Object);
             _studentRepoMock
-                .Setup(r => r.GetById(1))
-                .Returns(new Student { StudentId = 1, DepartmentId = 1 });
+     .Setup(r => r.GetById(1))
+     .Returns(new Student
+     {
+         StudentId = 1,
+         DepartmentId = 1,
+         IsActive = true
+     });
 
             _courseRepoMock
                 .Setup(r => r.GetById(1))
-                .Returns(new Course { CourseId = 1, DepartmentId = 1 });
+                .Returns(new Course
+                {
+                    CourseId = 1,
+                    DepartmentId = 1,
+                    IsActive = true,
+                    Credits = 3
+                });
 
             _enrollmentRepoMock
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Enrollment, bool>>>()))
@@ -265,11 +315,6 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 result.Message
             );
         }
-
-
-
-
-
 
     }
 }

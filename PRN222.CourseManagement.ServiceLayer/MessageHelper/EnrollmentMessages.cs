@@ -40,5 +40,13 @@
         public const string Updated =
     "Enrollment updated successfully.";
 
+        public const string StudentUnder18 = "Student must be at least 18 years old";
+        public const string CourseHasNoCredit = "Course must have at least 1 credit";
+        public const string CourseInactive = "Course is inactive";
+        public const string StudentInactive = "Student is inactive";
+        public const string InvalidGrade = "Enrollment grade must be between 0 and 10";
+
+        public const string GradingPeriodExpired = "Grading period expired";
+
     }
 }
