@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PRN222.CourseManagement.RepositoryTest\PRN222.CourseManagement.RepositoryTest.csproj" />
     <ProjectReference Include="..\PRN222.CourseManagement.Repository\PRN222.CourseManagement.Repository.csproj" />
     <ProjectReference Include="..\PRN222.CourseManagement.ServiceLayer\PRN222.CourseManagement.ServiceLayer.csproj" />
   </ItemGroup>
