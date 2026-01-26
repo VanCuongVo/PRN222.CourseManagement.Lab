@@ -3,6 +3,7 @@ using PRN222.CourseManagement.Repository.IUnitOfWork;
 using PRN222.CourseManagement.Repository.Models;
 using PRN222.CourseManagement.Service.DTO.Request;
 using PRN222.CourseManagement.Service.IService;
+using PRN222.CourseManagement.Service.MessageHelper;
 
 namespace PRN222.CourseManagement.Service.Service
 {
@@ -36,6 +37,57 @@ namespace PRN222.CourseManagement.Service.Service
                 result.Message = MessageHelper.EnrollmentMessages.CourseNotExist;
                 return result;
             }
+
+            // BR29: Student phải active
+            if (!student.IsActive)
+            {
+                result.IsSuccess = false;
+                result.Message = MessageHelper.EnrollmentMessages.StudentInactive;
+                return result;
+            }
+
+            // BR28: Course phải active
+            if (!course.IsActive)
+            {
+                result.IsSuccess = false;
+                result.Message = MessageHelper.EnrollmentMessages.CourseInactive;
+                return result;
+            }
+
+            // BR27: Course phải có ít nhất 1 credit
+            if (course.Credits < 1)
+            {
+                result.IsSuccess = false;
+                result.Message = MessageHelper.EnrollmentMessages.CourseHasNoCredit;
+                return result;
+            }
+
+
+            //BR30
+            var today = DateTime.Today;
+            if (entity.EnrollDate.Date > today.AddDays(30)
+               || entity.EnrollDate.Date < today.AddDays(-30))
+            {
+                result.IsSuccess = false;
+                result.Message = EnrollmentMessages.GradingPeriodExpired;
+                return result;
+            }
+
+
+            // BR26: Student phải >= 18 tuổi tại thời điểm enroll
+            var age = entity.EnrollDate.Year - student.DateOfBirth.Year;
+            if (student.DateOfBirth.Date > entity.EnrollDate.AddYears(-age))
+            {
+                age--;
+            }
+
+            if (age < 18)
+            {
+                result.IsSuccess = false;
+                result.Message = MessageHelper.EnrollmentMessages.StudentUnder18;
+                return result;
+            }
+
 
             // BR16: Không enroll trùng course
             var isDuplicated = _unitOfWork.enrollementRepository.Exists(e =>
@@ -78,6 +130,8 @@ namespace PRN222.CourseManagement.Service.Service
 
             return result;
         }
+
+
 
 
         public ServiceResult Create(Enrollment entity)

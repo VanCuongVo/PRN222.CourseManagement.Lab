@@ -161,6 +161,29 @@ This project strictly follows the mandatory TDD process:
 > The presence of failed tests at this stage confirms correct TDD implementation.
 
 
+## 🧪 Test Execution Result
+
+- **Total test cases**: 47  
+- **Passed**: 47  
+- **Failed**: 0  
+- **Skipped**: 0  
+- **Execution time**: ~1.1 seconds  
+
+✅ All unit tests passed successfully.
+![alt text](image-1.png)
+---
+
+## 🔧 Testing Environment
+
+- Framework: **.NET 8**
+- Unit Test: **NUnit**
+- Mocking: **Moq**
+- Architecture: **Repository Pattern**
+- Approach: **Test-Driven Development (TDD)**
+
+---
+
+
 
 
 ## 🚀 Cách chạy dự án

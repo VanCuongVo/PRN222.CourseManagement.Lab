@@ -172,7 +172,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
             };
             var course = new Course
             {
-                Credits = 0,
+                Credits = 3,
                 IsActive = false,
             };
 
@@ -211,7 +211,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
             Assert.IsFalse(result.IsSuccess);
-            Assert.AreEqual("Enroll into inactive course ", result.Message);
+            Assert.AreEqual("Course is inactive", result.Message);
         }
 
 
@@ -267,15 +267,13 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
             Assert.AreEqual("Student is inactive", result.Message);
 
         }
-
-
         [Test]
         public void TC30_Assign_Grade_Outside_Grading_Period_Should_Fail()
         {
             //Arrange
             var student = new Student
             {
-                DateOfBirth = DateTime.Today.AddYears(18),
+                DateOfBirth = DateTime.Today.AddYears(19),
                 IsActive = true,
 
             };
@@ -291,7 +289,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 CourseId = 1,
                 Student = student,
                 Course = course,
-                EnrollDate = DateTime.Today.AddDays(-40)
+                EnrollDate = DateTime.Today.AddDays(32)
             };
 
             var transactionMock = new Mock<IDbContextTransaction>();
@@ -318,7 +316,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
             //Act
             var result = _enrollmentService.Create(enrollment);
             Assert.IsFalse(result.IsSuccess);
-            Assert.AreEqual("Grading period expired", result.Message);
+            Assert.AreEqual(EnrollmentMessages.GradingPeriodExpired, result.Message);
 
         }
 
