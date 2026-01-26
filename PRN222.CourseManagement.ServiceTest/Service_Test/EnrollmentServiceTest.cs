@@ -11,6 +11,7 @@ using PRN222.CourseManagement.Service.Service;
 
 namespace PRN222.CourseManagement.ServiceTest.Service_Test
 {
+    [TestFixture]
     public class EnrollmentServiceTest
     {
         private Mock<IUnitOfWork> _uowMock;

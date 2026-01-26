@@ -18,4 +18,8 @@ public partial class Student
     public virtual Department Department { get; set; } = null!;
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
+    public DateTime DateOfBirth { get; set; }
+    public bool IsActive { get; set; }
+
 }

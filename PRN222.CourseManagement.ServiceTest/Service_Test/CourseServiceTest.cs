@@ -10,6 +10,7 @@ using PRN222.CourseManagement.Service.Service;
 
 namespace PRN222.CourseManagement.ServiceTest.Service_Test
 {
+    [TestFixture]
     public class CourseServiceTest
     {
         private Mock<IUnitOfWork> _uowMock;

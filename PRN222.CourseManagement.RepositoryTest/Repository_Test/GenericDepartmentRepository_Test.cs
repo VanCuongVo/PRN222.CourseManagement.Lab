@@ -2,6 +2,7 @@
 
 namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
 {
+    [TestFixture]
     public class GenericDepartmentRepository_Test
     {
         [Test]

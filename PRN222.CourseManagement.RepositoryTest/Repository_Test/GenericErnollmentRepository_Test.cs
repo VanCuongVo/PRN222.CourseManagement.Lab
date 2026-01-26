@@ -2,6 +2,7 @@
 
 namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
 {
+    [TestFixture]
     public class GenericErnollmentRepository_Test
     {
         [Test]
@@ -20,7 +21,7 @@ namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
 
             var student = new Student
             {
-                StudentCode = "SE170001",  
+                StudentCode = "SE170001",
                 FullName = "Nguyen Van A",
                 Email = "a@fpt.edu.vn",
                 DepartmentId = dept.DepartmentId

@@ -1,6 +1,7 @@
 ﻿using PRN222.CourseManagement.Repository.Models;
 namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
 {
+    [TestFixture]
     public class GenericCourseRepository_Test
     {
         [Test]
@@ -73,7 +74,7 @@ namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
             var exists = repo.Exists(c => c.CourseId == course.CourseId);
             Assert.IsTrue(exists);
 
-            
+
         }
 
 
@@ -114,7 +115,7 @@ namespace PRN222.CourseManagement.RepositoryTest.Repository_Test
             ctx.SaveChanges();
 
             // Assert
-            var updatedCourse =repo.GetById(course.CourseId);
+            var updatedCourse = repo.GetById(course.CourseId);
 
             Assert.IsNotNull(updatedCourse);
             Assert.AreEqual("Advanced .NET", updatedCourse!.Title);

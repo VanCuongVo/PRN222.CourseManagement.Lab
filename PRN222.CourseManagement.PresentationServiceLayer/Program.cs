@@ -34,6 +34,8 @@ namespace PRN222.CourseManagement.PresentationServiceLayer
             var courseService = scope.ServiceProvider.GetRequiredService<ICourseService>();
             var enrollmentService = scope.ServiceProvider.GetRequiredService<IEnrollmentService>();
 
+
+
             // ===== 3. Menu =====
             while (true)
             {

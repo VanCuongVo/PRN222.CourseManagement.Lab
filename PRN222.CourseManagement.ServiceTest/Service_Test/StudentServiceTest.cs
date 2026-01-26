@@ -10,13 +10,14 @@ using PRN222.CourseManagement.Service.Service;
 
 namespace PRN222.CourseManagement.ServiceTest.Service_Test
 {
+    [TestFixture]
     public class StudentServiceTest
     {
         private Mock<IUnitOfWork> _uowMock;
         private Mock<IStudentRepository> _studentRepoMock;
         private Mock<IDepartmentRepository> _deptRepoMock;
         private Mock<IEnrollementRepository> _enrollmentRepoMock;
-        private StudentService  _studentService;
+        private StudentService _studentService;
         [SetUp]
         public void Setup()
         {
@@ -26,7 +27,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
             _uowMock = new Mock<IUnitOfWork>();
 
             _uowMock.Setup(u => u.departmentRepository).Returns(_deptRepoMock.Object);
-      
+
             _uowMock.Setup(u => u.studentRepository).Returns(_studentRepoMock.Object);
             _uowMock.Setup(u => u.enrollementRepository).Returns(_enrollmentRepoMock.Object);
 
@@ -44,10 +45,10 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 FullName = "Nguyen Van A",
                 DepartmentId = 1
             };
-           _studentRepoMock
-       .Setup(u =>
-            u.Exists(It.IsAny<Expression<Func<Student, bool>>>()))
-           .Returns(true);
+            _studentRepoMock
+        .Setup(u =>
+             u.Exists(It.IsAny<Expression<Func<Student, bool>>>()))
+            .Returns(true);
             // Act
             var result = _studentService.Create(student);
 
@@ -196,7 +197,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
             int studentId = 1;
             _studentRepoMock
                    .Setup(r => r.GetById(studentId))
-                   .Returns(new Student { StudentId = studentId }); // ✅
+                   .Returns(new Student { StudentId = studentId });
 
             _enrollmentRepoMock
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Enrollment, bool>>>()))
@@ -211,7 +212,6 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 MessageStudent.STUDENT_HAS_ENROLLMENTS,
                 result.Message
             );
-
         }
 
         [Test]
