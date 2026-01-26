@@ -317,7 +317,6 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
             var result = _enrollmentService.Create(enrollment);
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(EnrollmentMessages.GradingPeriodExpired, result.Message);
-
         }
 
     }

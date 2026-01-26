@@ -113,8 +113,6 @@ Ví dụ:
 
 ### Current Test Results
 
-![Test Explorer – TDD Red Phase](docs/images/test-explorer.png)
-
 > 📸![alt text](image.png)
 
 * **Total tests:** 47
