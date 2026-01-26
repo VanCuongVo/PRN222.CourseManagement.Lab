@@ -35,7 +35,7 @@ namespace PRN222.CourseManagement.RepositoryTest.UnitOfWork_Test
             await uow.SaveChangeAsync();
 
             // Assert
-            var exists = ctx.Departments.Any(d => d.Name == "SE");
+            var exists =  ctx.Departments.Any(d => d.Name == "SE");
             Assert.IsTrue(exists);
         }
         [Test]

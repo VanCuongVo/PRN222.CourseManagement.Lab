@@ -17,13 +17,23 @@ using PRN222.CourseManagement.Repository.UnitOfWork;
 
 namespace PRN222.CourseManagementPresentation
 {
-    public class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
+        {
+            var serviceProvider = ConfigureServices();
+            using var scope = serviceProvider.CreateScope();
+            var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+            RunMainMenu(unitOfWork);
+        }
+
+        private static ServiceProvider ConfigureServices()
         {
             var configuration = new ConfigurationBuilder()
-  .AddJsonFile("appsettings.json")
-  .Build();
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             var services = new ServiceCollection();
 
             services.AddDbContext<CourseManagementDbContext>(options =>
@@ -36,156 +46,182 @@ namespace PRN222.CourseManagementPresentation
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
+            return services.BuildServiceProvider();
+        }
 
-
-            var serviceProvider = services.BuildServiceProvider();
-            using var scope = serviceProvider.CreateScope();
-            var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
-
-
-            while (true)
+        private static void RunMainMenu(IUnitOfWork unitOfWork)
+        {
+            bool isRunning = true;
+            while (isRunning)
             {
                 Console.Clear();
-                Console.WriteLine("====================================");
-                Console.WriteLine("   COURSE MANAGEMENT SYSTEM");
-                Console.WriteLine("====================================");
-                Console.WriteLine("1. Display all students");
-                Console.WriteLine("2. Display courses by department");
-                Console.WriteLine("3. Display courses of a student");
-                Console.WriteLine("4. Enroll student into course");
-                Console.WriteLine("5. Update student information");
-                Console.WriteLine("6. Delete a course");
-                Console.WriteLine("7. Display enrollment report");
-                Console.WriteLine("0. Exit");
-                Console.WriteLine("------------------------------------");
-                Console.Write("Select an option: ");
-
+                ShowMenuGui();
                 var choice = Console.ReadLine();
 
-                switch (choice)
+                if (choice == "0")
                 {
-                    case "1":
-                        Console.Clear();
-                        Console.WriteLine("=== All Students ===");
-                        foreach (var s in unitOfWork.studentRepository.GetAll())
-                        {
-                            Console.WriteLine($"{s.StudentId} - {s.FullName} - {s.Email}");
-                        }
-                        Pause();
-                        break;
+                    isRunning = false;
+                    continue;
+                }
 
-                    case "2":
-                        Console.Write("Enter Department Id: ");
-                        int depId = int.Parse(Console.ReadLine()!);
-                        var coursesByDep = unitOfWork.courseRepository.GetAll()
-                                                       .Where(c => c.DepartmentId == depId);
+                ExecuteChoice(choice, unitOfWork);
+            }
+        }
 
-                        Console.WriteLine("Courses:");
-                        foreach (var c in coursesByDep)
-                        {
-                            Console.WriteLine($"{c.CourseId} - {c.Title}");
-                        }
-                        Pause();
-                        break;
+        private static void ShowMenuGui()
+        {
+            Console.WriteLine("====================================");
+            Console.WriteLine("    COURSE MANAGEMENT SYSTEM");
+            Console.WriteLine("====================================");
+            Console.WriteLine("1. Display all students");
+            Console.WriteLine("2. Display courses by department");
+            Console.WriteLine("3. Display courses of a student");
+            Console.WriteLine("4. Enroll student into course");
+            Console.WriteLine("5. Update student information");
+            Console.WriteLine("6. Delete a course");
+            Console.WriteLine("7. Display enrollment report");
+            Console.WriteLine("0. Exit");
+            Console.WriteLine("------------------------------------");
+            Console.Write("Select an option: ");
+        }
 
-                    case "3":
-                        Console.Write("Enter Student Id: ");
-                        int stuId = int.Parse(Console.ReadLine()!);
+        private static void ExecuteChoice(string? choice, IUnitOfWork unitOfWork)
+        {
+            switch (choice)
+            {
+                case "1": ShowAllStudents(unitOfWork); break;
+                case "2": ShowCoursesByDept(unitOfWork); break;
+                case "3": ShowStudentCourses(unitOfWork); break;
+                case "4": PerformEnrollment(unitOfWork); break;
+                case "5": UpdateStudentInfo(unitOfWork); break;
+                case "6": RemoveCourse(unitOfWork); break;
+                case "7": ShowEnrollmentReport(unitOfWork); break;
+                default:
+                    Console.WriteLine("Invalid option!");
+                    Pause();
+                    break;
+            }
+        }
 
-                        var enrolledCourses =
-                            from e in unitOfWork.enrollementRepository.GetAll()
-                            join c in unitOfWork.courseRepository.GetAll() on e.CourseId equals c.CourseId
-                            where e.StudentId == stuId
-                            select c;
+        private static void ShowAllStudents(IUnitOfWork unitOfWork)
+        {
+            Console.Clear();
+            Console.WriteLine("=== All Students ===");
+            var students = unitOfWork.studentRepository.GetAll();
+            foreach (var s in students)
+            {
+                Console.WriteLine($"{s.StudentId} - {s.FullName} - {s.Email}");
+            }
+            Pause();
+        }
 
-                        Console.WriteLine("Courses of Student:");
-                        foreach (var c in enrolledCourses)
-                        {
-                            Console.WriteLine($"{c.CourseId} - {c.Title}");
-                        }
-                        Pause();
-                        break;
-
-                    case "4":
-                        Console.Write("Student Id: ");
-                        int sId = int.Parse(Console.ReadLine()!);
-                        Console.Write("Course Id: ");
-                        int cId = int.Parse(Console.ReadLine()!);
-
-                        unitOfWork.enrollementRepository.Add(new Enrollment
-                        {
-                            StudentId = sId,
-                            CourseId = cId,
-                            EnrollDate = DateTime.Now
-                        });
-                        unitOfWork.SaveChangeAsync();
-
-                        Console.WriteLine("Enrolled successfully!");
-                        Pause();
-                        break;
-
-                    case "5":
-                        Console.Write("Student Id: ");
-                        int updateId = int.Parse(Console.ReadLine()!);
-
-                        var student = unitOfWork.studentRepository.GetById(updateId);
-                        if (student != null)
-                        {
-                            Console.Write("New Full Name: ");
-                            student.FullName = Console.ReadLine()!;
-                            Console.Write("New Email: ");
-                            student.Email = Console.ReadLine();
-
-                            unitOfWork.studentRepository.Update(student);
-                            unitOfWork.SaveChangeAsync();
-                            Console.WriteLine("Updated successfully!");
-                        }
-                        Pause();
-                        break;
-
-                    case "6":
-                        Console.Write("Course Id to delete: ");
-                        int delId = int.Parse(Console.ReadLine()!);
-
-                        unitOfWork.courseRepository.Delete(delId);
-                        unitOfWork.SaveChangeAsync();
-
-                        Console.WriteLine("Deleted successfully!");
-                        Pause();
-                        break;
-
-                    case "7":
-                        Console.WriteLine("=== Enrollment Report ===");
-                        var report =
-                            from e in unitOfWork.enrollementRepository.GetAll()
-                            join s in unitOfWork.studentRepository.GetAll() on e.StudentId equals s.StudentId
-                            join c in unitOfWork.courseRepository.GetAll() on e.CourseId equals c.CourseId
-                            select new { s.FullName, c.Title, e.EnrollDate, e.Grade };
-
-                        foreach (var r in report)
-                        {
-                            Console.WriteLine($"{r.FullName}            | {r.Title}            | {r.EnrollDate:d}                 | {r.Grade}");
-                        }
-                        Pause();
-                        break;
-
-                    case "0":
-                        return;
-
-                    default:
-                        Console.WriteLine("Invalid option!");
-                        Pause();
-                        break;
+        private static void ShowCoursesByDept(IUnitOfWork unitOfWork)
+        {
+            Console.Write("Enter Department Id: ");
+            if (int.TryParse(Console.ReadLine(), out int depId))
+            {
+                var courses = unitOfWork.courseRepository.GetAll().Where(c => c.DepartmentId == depId);
+                Console.WriteLine("Courses:");
+                foreach (var c in courses)
+                {
+                    Console.WriteLine($"{c.CourseId} - {c.Title}");
                 }
             }
+            Pause();
+        }
 
-            static void Pause()
+        private static void ShowStudentCourses(IUnitOfWork unitOfWork)
+        {
+            Console.Write("Enter Student Id: ");
+            if (int.TryParse(Console.ReadLine(), out int stuId))
             {
-                Console.WriteLine("\nPress any key to continue...");
-                Console.ReadKey();
-            }
+                var enrolledCourses = from e in unitOfWork.enrollementRepository.GetAll()
+                                      join c in unitOfWork.courseRepository.GetAll() on e.CourseId equals c.CourseId
+                                      where e.StudentId == stuId
+                                      select c;
 
+                Console.WriteLine("Courses of Student:");
+                foreach (var c in enrolledCourses)
+                {
+                    Console.WriteLine($"{c.CourseId} - {c.Title}");
+                }
+            }
+            Pause();
+        }
+
+        private static void PerformEnrollment(IUnitOfWork unitOfWork)
+        {
+            Console.Write("Student Id: ");
+            int sId = int.Parse(Console.ReadLine()!);
+            Console.Write("Course Id: ");
+            int cId = int.Parse(Console.ReadLine()!);
+
+            unitOfWork.enrollementRepository.Add(new Enrollment
+            {
+                StudentId = sId,
+                CourseId = cId,
+                EnrollDate = DateTime.Now
+            });
+            unitOfWork.SaveChangeAsync();
+            Console.WriteLine("Enrolled successfully!");
+            Pause();
+        }
+
+        private static void UpdateStudentInfo(IUnitOfWork unitOfWork)
+        {
+            Console.Write("Student Id: ");
+            int updateId = int.Parse(Console.ReadLine()!);
+            var student = unitOfWork.studentRepository.GetById(updateId);
+
+            if (student != null)
+            {
+                Console.Write("New Full Name: ");
+                student.FullName = Console.ReadLine()!;
+                Console.Write("New Email: ");
+                student.Email = Console.ReadLine();
+
+                unitOfWork.studentRepository.Update(student);
+                unitOfWork.SaveChangeAsync();
+                Console.WriteLine("Updated successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Student not found!");
+            }
+            Pause();
+        }
+
+        private static void RemoveCourse(IUnitOfWork unitOfWork)
+        {
+            Console.Write("Course Id to delete: ");
+            if (int.TryParse(Console.ReadLine(), out int delId))
+            {
+                unitOfWork.courseRepository.Delete(delId);
+                unitOfWork.SaveChangeAsync();
+                Console.WriteLine("Deleted successfully!");
+            }
+            Pause();
+        }
+
+        private static void ShowEnrollmentReport(IUnitOfWork unitOfWork)
+        {
+            Console.WriteLine("=== Enrollment Report ===");
+            var report = from e in unitOfWork.enrollementRepository.GetAll()
+                         join s in unitOfWork.studentRepository.GetAll() on e.StudentId equals s.StudentId
+                         join c in unitOfWork.courseRepository.GetAll() on e.CourseId equals c.CourseId
+                         select new { s.FullName, c.Title, e.EnrollDate, e.Grade };
+
+            foreach (var r in report)
+            {
+                Console.WriteLine($"{r.FullName,-20} | {r.Title,-20} | {r.EnrollDate:d} | {r.Grade}");
+            }
+            Pause();
+        }
+
+        private static void Pause()
+        {
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
     }
 }

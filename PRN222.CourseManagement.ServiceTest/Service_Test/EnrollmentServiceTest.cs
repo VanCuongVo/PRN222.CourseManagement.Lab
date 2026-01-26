@@ -72,9 +72,6 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                     IsActive = true,
                     Credits = 3
                 });
-
-
-
             _enrollmentRepoMock
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Enrollment, bool>>>()))
                 .Returns(true);

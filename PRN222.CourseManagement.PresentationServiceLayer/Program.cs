@@ -18,7 +18,7 @@ using PRN222.CourseManagement.Service.Service;
 
 namespace PRN222.CourseManagement.PresentationServiceLayer
 {
-    public class Program
+    public  static class Program
     {
         static void Main(string[] args)
         {
