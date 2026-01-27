@@ -17,20 +17,27 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Restore
-        run: dotnet restore
+      - name: Install SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
 
-      - name: Build
-        run: dotnet build --no-restore
+      - name: Begin Sonar Analysis
+        run: |
+          dotnet sonarscanner begin \
+            /k:"VoVanCuong_PRN222.CourseManagement.Lab" \
+            /o:"vovancuong" \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+
+      - name: Restore Solution
+        run: dotnet restore PRN222.CourseManagement.sln
+
+      - name: Build Solution
+        run: dotnet build PRN222.CourseManagement.sln --no-restore
 
       - name: Test with coverage
-        run: dotnet test --collect:"XPlat Code Coverage"
+        run: dotnet test PRN222.CourseManagement.sln \
+             --collect:"XPlat Code Coverage" \
+             -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          args: >
-            -Dsonar.projectKey=VanCuongVo_PRN222.CourseManagement.Lab
-            -Dsonar.organization=vancuongvo
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: End Sonar Analysis
+        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
