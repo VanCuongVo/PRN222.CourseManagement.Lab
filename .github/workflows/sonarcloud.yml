@@ -23,7 +23,7 @@ jobs:
       - name: Begin Sonar Analysis
         run: |
           dotnet sonarscanner begin \
-            /k:"VoVanCuong_PRN222.CourseManagement.Lab" \
+            /k:"PRN222.CourseManagement.Lab" \
             /o:"vancuongvo" \
             /d:sonar.branch.name=main \
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
