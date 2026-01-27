@@ -1,0 +1,14 @@
+﻿D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\DTO\Request\ServiceResult.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\IService\IBaseService.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\IService\ICourseService.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\IService\IDepartmentService.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\IService\IEnrollmentService.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\IService\IStudentService.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\MessageHelper\DepartmentMessages.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\MessageHelper\EnrollmentMessages.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\MessageHelper\MessageCourse.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\MessageHelper\MessageStudent.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\Service\CourseService.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\Service\DepartmentService.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\Service\EnrollmentService.cs
+D:\Spring_2026\PRN222\HomeWork\PRN222.CourseManagement.Repository\PRN222.CourseManagement.ServiceLayer\Service\StudentService.cs
