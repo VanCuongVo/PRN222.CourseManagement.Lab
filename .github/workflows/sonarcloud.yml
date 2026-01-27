@@ -30,7 +30,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           args: >
-            -Dsonar.projectKey=VanCuongVo_PRN222.CourseManagement.Lab
+            -Dsonar.projectKey=PRN222.CourseManagement.Lab
             -Dsonar.organization=vancuongvo
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
