@@ -24,20 +24,21 @@ jobs:
         run: |
           dotnet sonarscanner begin \
             /k:"VoVanCuong_PRN222.CourseManagement.Lab" \
-            /o:"vovancuong" \
+            /o:"vancuongvo" \
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 
       - name: Restore Solution
-        run: dotnet restore PRN222.CourseManagement.sln
+        run: dotnet restore PRN222.CourseManagement.Repository.sln
 
       - name: Build Solution
-        run: dotnet build PRN222.CourseManagement.sln --no-restore
+        run: dotnet build PRN222.CourseManagement.Repository.sln --no-restore
 
       - name: Test with coverage
-        run: dotnet test PRN222.CourseManagement.sln \
-             --collect:"XPlat Code Coverage" \
-             -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        run: |
+          dotnet test PRN222.CourseManagement.Repository.sln \
+            --collect:"XPlat Code Coverage" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
       - name: End Sonar Analysis
         run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
