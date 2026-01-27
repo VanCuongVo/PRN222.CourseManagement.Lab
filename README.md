@@ -113,7 +113,7 @@ Ví dụ:
 
 ### Current Test Results
 
-> 📸![alt text](image.png)
+![alt text](image.png)
 
 * **Total tests:** 47
 * **Passed:** 42 ✅
@@ -181,6 +181,23 @@ This project strictly follows the mandatory TDD process:
 
 ---
 
+
+## 📊 SonarQube Analysis Result
+
+| Metric | Result |
+|------|--------|
+| Quality Gate | ✅ Passed |
+| Bugs | 0 |
+| Vulnerabilities | 0 |
+| Security Hotspots | 0 (Reviewed 100%) |
+| Code Smells | 118 |
+| Maintainability | A |
+| Reliability | A |
+| Security | A |
+
+![alt text](image-2.png)
+
+> 📌 SonarQube dashboard confirms that the project **meets all quality requirements**.
 
 
 
