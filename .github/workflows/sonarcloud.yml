@@ -26,7 +26,6 @@ jobs:
             /k:"PRN222.CourseManagement.Lab" \
             /o:"vancuongvo" \
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
-            /d:sonar.host.url="https://sonarcloud.io" \
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 
       - name: Restore Solution
