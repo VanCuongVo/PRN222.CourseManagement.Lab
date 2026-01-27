@@ -25,7 +25,6 @@ jobs:
           dotnet sonarscanner begin \
             /k:"PRN222.CourseManagement.Lab" \
             /o:"vancuongvo" \
-            /d:sonar.branch.name=main \
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 
