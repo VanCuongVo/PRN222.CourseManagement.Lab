@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PRN222.CourseManagement.Repository\PRN222.CourseManagement.Repository.csproj" />
+    <ProjectReference Include="..\PRN222.CourseManagement.ServiceLayer\PRN222.CourseManagement.ServiceLayer.csproj" />
+  </ItemGroup>
+
+</Project>
