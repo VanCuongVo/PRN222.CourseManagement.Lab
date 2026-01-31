@@ -16,8 +16,6 @@ using PRN222.CourseManagement.Service.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
-
 // DI DB
 builder.Services.AddDbContext<CourseManagementDbContext>(options =>
     options.UseSqlServer(
@@ -61,6 +59,6 @@ app.UseRouting();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Student}/{action=Index}/{id?}");
 
 app.Run();

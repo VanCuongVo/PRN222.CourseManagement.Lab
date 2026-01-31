@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PRN222.CourseManagement.Repository\PRN222.CourseManagement.Repository.csproj" />
     <ProjectReference Include="..\PRN222.CourseManagement.ServiceLayer\PRN222.CourseManagement.ServiceLayer.csproj" />
   </ItemGroup>
