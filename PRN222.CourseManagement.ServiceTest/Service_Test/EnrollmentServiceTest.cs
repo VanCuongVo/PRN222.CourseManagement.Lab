@@ -46,7 +46,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_Enrollment_Duplicated_Fail()
+        public async Task Create_Enrollment_Duplicated_Fail()
         {
             var enrollment = new Enrollment
             {
@@ -76,7 +76,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Enrollment, bool>>>()))
                 .Returns(true);
 
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -86,7 +86,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_Enrollment_OverLimit_Fail()
+        public async Task Create_Enrollment_OverLimit_Fail()
         {
             var enrollment = new Enrollment
             {
@@ -125,7 +125,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.Count(It.IsAny<Expression<Func<Enrollment, bool>>>()))
                 .Returns(5);
 
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -136,7 +136,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void Create_Enrollment_DateInPast_Fail()
+        public async Task Create_Enrollment_DateInPast_Fail()
         {
             var enrollment = new Enrollment
             {
@@ -164,7 +164,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                     Credits = 3
                 });
 
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -175,7 +175,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void Create_Enrollment_DifferentDepartment_Fail()
+        public async Task Create_Enrollment_DifferentDepartment_Fail()
         {
             var enrollment = new Enrollment
             {
@@ -203,7 +203,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                     Credits = 3
                 });
 
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -213,7 +213,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_Enrollment_StudentNotFound_Fail()
+        public async Task Create_Enrollment_StudentNotFound_Fail()
         {
             var enrollment = new Enrollment
             {
@@ -226,7 +226,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.GetById(1))
                 .Returns((Student)null);
 
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -237,7 +237,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void Create_Enrollment_CourseNotFound_Fail()
+        public async Task Create_Enrollment_CourseNotFound_Fail()
         {
             var enrollment = new Enrollment
             {
@@ -254,7 +254,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.GetById(1))
                 .Returns((Course)null);
 
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -264,7 +264,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_Enrollment_Success()
+        public async Task Create_Enrollment_Success()
         {
             var enrollment = new Enrollment
             {
@@ -304,7 +304,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(3);
 
 
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(
