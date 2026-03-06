@@ -15,7 +15,7 @@ namespace PRN222.CourseManagement.Service.Service
             _unitOfWork = unitOfWork;
         }
 
-        public ServiceResult Create(Department entity)
+        public async Task<ServiceResult> Create(Department entity)
         {
             var result = new ServiceResult();
             try
@@ -26,7 +26,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validate;
                 }
                 _unitOfWork.departmentRepository.Add(entity);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
                 result.IsSuccess = true;
                 result.Message = MessageHelper.DepartmentMessages.Created;
                 return result;
@@ -68,7 +68,7 @@ namespace PRN222.CourseManagement.Service.Service
             return result;
         }
 
-        public ServiceResult Delete(int id)
+        public async Task<ServiceResult> Delete(int id)
         {
             var result = new ServiceResult();
             try
@@ -79,7 +79,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validate;
                 }
                 _unitOfWork.departmentRepository.Delete(id);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
 
                 result.IsSuccess = true;
                 result.Message = MessageHelper.DepartmentMessages.Deleted;
@@ -145,7 +145,7 @@ namespace PRN222.CourseManagement.Service.Service
         }
 
         [ExcludeFromCodeCoverage]
-        public ServiceResult Update(Department entity)
+        public async Task<ServiceResult> Update(Department entity)
         {
             var result = new ServiceResult();
             try
@@ -170,7 +170,7 @@ namespace PRN222.CourseManagement.Service.Service
                 department.Description = entity.Description.Trim();
 
                 _unitOfWork.departmentRepository.Update(entity);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
                 result.IsSuccess = true;
                 result.Message = MessageHelper.DepartmentMessages.Updated;
                 return result;

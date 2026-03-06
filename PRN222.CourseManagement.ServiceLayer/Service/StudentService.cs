@@ -16,7 +16,7 @@ namespace PRN222.CourseManagement.Service.Service
             _unitOfWork = unitOfWork;
         }
 
-        public ServiceResult Create(Student entity)
+        public async Task<ServiceResult> Create(Student entity)
         {
             var result = new ServiceResult();
             try
@@ -27,7 +27,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validateResult;
                 }
                 _unitOfWork.studentRepository.Add(entity);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
 
                 result.IsSuccess = true;
                 result.Message = MessageStudent.STUDENT_CREATE_SUCCESS;
@@ -88,7 +88,7 @@ namespace PRN222.CourseManagement.Service.Service
 
         }
 
-        public ServiceResult Delete(int id)
+        public async Task<ServiceResult> Delete(int id)
         {
             ServiceResult result = new ServiceResult();
             try
@@ -100,7 +100,7 @@ namespace PRN222.CourseManagement.Service.Service
 
                 }
                 _unitOfWork.studentRepository.Delete(id);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
                 result.IsSuccess = true;
                 result.Message = MessageStudent.STUDENT_DELETE_SUCCESS;
                 return result;
@@ -154,7 +154,7 @@ namespace PRN222.CourseManagement.Service.Service
         }
 
         [ExcludeFromCodeCoverage]
-        public ServiceResult Update(Student entity)
+        public async Task<ServiceResult> Update(Student entity)
         {
             var result = new ServiceResult();
             try
@@ -174,7 +174,7 @@ namespace PRN222.CourseManagement.Service.Service
 
                 // Update the entity directly
                 _unitOfWork.studentRepository.Update(entity);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
 
                 result.IsSuccess = true;
                 result.Message = MessageStudent.STUDENT_UPDATE_SUCCESS;
