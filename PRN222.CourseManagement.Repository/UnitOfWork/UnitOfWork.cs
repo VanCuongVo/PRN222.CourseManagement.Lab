@@ -18,7 +18,7 @@ namespace PRN222.CourseManagement.Repository.UnitOfWork
         public IDepartmentRepository departmentRepository { get; set; }
         public ICourseRepository courseRepository { get; set; }
 
-        public UnitOfWork(CourseManagementDbContext courseManagementDbContext, IStudentRepository _studentRepository, ICourseRepository _courseRepository, IDepartmentRepository _departmentRepository, IEnrollementRepository _enrollementRepository )
+        public UnitOfWork(CourseManagementDbContext courseManagementDbContext, IStudentRepository _studentRepository, ICourseRepository _courseRepository, IDepartmentRepository _departmentRepository, IEnrollementRepository _enrollementRepository)
         {
             _courseManagementDbContext = courseManagementDbContext;
             studentRepository = _studentRepository;
@@ -28,13 +28,19 @@ namespace PRN222.CourseManagement.Repository.UnitOfWork
         }
         public void Dispose()
         {
-          _courseManagementDbContext.Dispose();
+            _courseManagementDbContext.Dispose();
         }
 
         public async Task SaveChangeAsync()
         {
             await _courseManagementDbContext.SaveChangesAsync();
         }
+
+        public void SaveChanges()
+        {
+            _courseManagementDbContext.SaveChanges();
+        }
+
         [ExcludeFromCodeCoverage]
         public IDbContextTransaction BeginTransaction()
         {

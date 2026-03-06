@@ -20,7 +20,7 @@ namespace PRN222.CourseManagement.Repository.Repository.GenericRepository
 
         public void Add(T entity)
         {
-            _courseManagementDbContext.Set<T>().AddAsync(entity);
+            _courseManagementDbContext.Set<T>().Add(entity);
         }
 
         public void Delete(object id)

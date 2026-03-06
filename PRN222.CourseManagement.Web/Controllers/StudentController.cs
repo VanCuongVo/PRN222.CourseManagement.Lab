@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PRN222.CourseManagement.Repository.Models;
 using PRN222.CourseManagement.Service.IService;
 
@@ -8,18 +9,34 @@ namespace PRN222.CourseManagement.Web.Controllers
     {
 
         private readonly IStudentService _studentService;
+        private readonly IDepartmentService _departmentService;
 
-        public StudentController(IStudentService studentService)
+        public StudentController(IStudentService studentService, IDepartmentService departmentService)
         {
             _studentService = studentService;
+            _departmentService = departmentService;
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            LoadDepartments();
+            return View();
         }
 
         [HttpPost]
         public IActionResult Create(Student model)
         {
+            if (!ModelState.IsValid)
+            {
+                LoadDepartments();
+                return View(model);
+            }
+
             var result = _studentService.Create(model);
             if (!result.IsSuccess)
             {
+                LoadDepartments();
                 ModelState.AddModelError("", result.Message);
                 return View(model);
             }
@@ -28,14 +45,72 @@ namespace PRN222.CourseManagement.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Edit(int id)
         {
-            return View();
+            var student = _studentService.GetById(id);
+            if (student == null)
+            {
+                TempData["Error"] = "Student not found!";
+                return RedirectToAction("Index");
+            }
+            LoadDepartments();
+            return View(student);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Student model)
+        {
+            if (!ModelState.IsValid)
+            {
+                LoadDepartments();
+                return View(model);
+            }
+
+            var result = _studentService.Update(model);
+            if (!result.IsSuccess)
+            {
+                LoadDepartments();
+                ModelState.AddModelError("", result.Message);
+                return View(model);
+            }
+            TempData["Success"] = result.Message;
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var student = _studentService.GetById(id);
+            if (student == null)
+            {
+                TempData["Error"] = "Student not found!";
+                return RedirectToAction("Index");
+            }
+            return View(student);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var student = _studentService.GetById(id);
+            if (student == null)
+            {
+                TempData["Error"] = "Student not found!";
+                return RedirectToAction("Index");
+            }
+            return View(student);
         }
 
 
+        public IActionResult Index()
+        {
+            var students = _studentService.GetAll();
+            return View(students);
+        }
+
         [HttpPost]
-        public IActionResult Delete(int id)
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
         {
             var result = _studentService.Delete(id);
 
@@ -51,11 +126,10 @@ namespace PRN222.CourseManagement.Web.Controllers
             return RedirectToAction("Index");
         }
 
-
-        public IActionResult Index()
+        private void LoadDepartments()
         {
-            var students = _studentService.GetAll();
-            return View(students);
+            var departments = _departmentService.GetAll();
+            ViewBag.Departments = new SelectList(departments, "DepartmentId", "Name");
         }
     }
 }
