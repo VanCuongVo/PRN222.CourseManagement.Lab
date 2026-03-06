@@ -26,7 +26,7 @@ namespace PRN222.CourseManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("StudentCode,FullName,Email,DateOfBirth,DepartmentId,IsActive")] Student model)
+        public async Task<IActionResult> Create([Bind("StudentCode,FullName,Email,DateOfBirth,DepartmentId,IsActive")] Student model)
         {
             // Remove validation for navigation properties
             ModelState.Remove("Department");
@@ -38,7 +38,7 @@ namespace PRN222.CourseManagement.Web.Controllers
                 return View(model);
             }
 
-            var result = _studentService.Create(model);
+            var result = await _studentService.Create(model);
             if (!result.IsSuccess)
             {
                 LoadDepartments();
@@ -64,7 +64,7 @@ namespace PRN222.CourseManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("StudentId,StudentCode,FullName,Email,DateOfBirth,DepartmentId,IsActive")] Student model)
+        public async Task<IActionResult> Edit([Bind("StudentId,StudentCode,FullName,Email,DateOfBirth,DepartmentId,IsActive")] Student model)
         {
             // Remove validation for navigation properties
             ModelState.Remove("Department");
@@ -76,7 +76,7 @@ namespace PRN222.CourseManagement.Web.Controllers
                 return View(model);
             }
 
-            var result = _studentService.Update(model);
+            var result = await _studentService.Update(model);
             if (!result.IsSuccess)
             {
                 LoadDepartments();
@@ -120,9 +120,9 @@ namespace PRN222.CourseManagement.Web.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var result = _studentService.Delete(id);
+            var result = await _studentService.Delete(id);
 
             if (!result.IsSuccess)
             {

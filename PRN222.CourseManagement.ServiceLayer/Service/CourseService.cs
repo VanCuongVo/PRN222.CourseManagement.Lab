@@ -16,9 +16,9 @@ namespace PRN222.CourseManagement.Service.Service
             _unitOfWork = unitOfWork;
         }
 
-        public ServiceResult Create(Course entity)
+        public async Task<ServiceResult> Create(Course entity)
         {
-            var result = new ServiceResult();
+            var result = new ServiceResult();   
             try
             {
                 var validateResult = ValidateCourseForCreate(entity);
@@ -26,7 +26,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validateResult;
 
                 _unitOfWork.courseRepository.Add(entity);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
 
                 result.IsSuccess = true;
                 result.Message = MessageCourse.COURSE_CREATE_SUCCESS;
@@ -71,7 +71,7 @@ namespace PRN222.CourseManagement.Service.Service
             return result;
         }
 
-        public ServiceResult Delete(int id)
+        public async Task<ServiceResult> Delete(int id)
         {
             var result = new ServiceResult();
             try
@@ -81,7 +81,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validateResult;
 
                 _unitOfWork.courseRepository.Delete(id);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
                 result.IsSuccess = true;
                 result.Message = MessageCourse.COURSE_DELETE_SUCCESS;
                 return result;
@@ -130,7 +130,7 @@ namespace PRN222.CourseManagement.Service.Service
             return _unitOfWork.courseRepository.GetAll();
         }
         [ExcludeFromCodeCoverage]
-        public ServiceResult Update(Course entity)
+        public async Task<ServiceResult> Update(Course entity)
         {
             var result = new ServiceResult();
             try
@@ -154,7 +154,7 @@ namespace PRN222.CourseManagement.Service.Service
                 course.DepartmentId = entity.DepartmentId;
 
                 _unitOfWork.courseRepository.Update(course);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
 
                 result.IsSuccess = true;
                 result.Message = MessageHelper.MessageCourse.COURSE_UPDATE_SUCCESS;

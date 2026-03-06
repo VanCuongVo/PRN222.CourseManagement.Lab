@@ -4,9 +4,9 @@ namespace PRN222.CourseManagement.Service.IService
 {
     public interface IBaseService<T>
     {
-        ServiceResult Create(T entity);
-        ServiceResult Update(T entity);
-        ServiceResult Delete(int id);
+        Task<ServiceResult> Create(T entity);
+        Task<ServiceResult> Update(T entity);
+        Task<ServiceResult> Delete(int id);
         IEnumerable<T> GetAll();
         T? GetById(int id);
     }

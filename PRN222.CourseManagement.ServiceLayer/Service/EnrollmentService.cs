@@ -134,7 +134,7 @@ namespace PRN222.CourseManagement.Service.Service
 
 
 
-        public ServiceResult Create(Enrollment entity)
+        public async Task<ServiceResult> Create(Enrollment entity)
         {
             var result = new ServiceResult();
             using var transaction = _unitOfWork.BeginTransaction(); // BR24
@@ -148,9 +148,9 @@ namespace PRN222.CourseManagement.Service.Service
                 }
 
                 _unitOfWork.enrollementRepository.Add(entity);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
 
-                transaction.Commit(); // commit SAU khi save OK
+                await transaction.CommitAsync(); // commit SAU khi save OK
 
                 result.IsSuccess = true;
                 result.Message = MessageHelper.EnrollmentMessages.Created;
@@ -158,7 +158,7 @@ namespace PRN222.CourseManagement.Service.Service
             }
             catch
             {
-                transaction.Rollback();
+                await transaction.RollbackAsync();
 
                 result.IsSuccess = false;
                 result.Message = MessageHelper.EnrollmentMessages.TransactionFailed; // BR25
@@ -167,7 +167,7 @@ namespace PRN222.CourseManagement.Service.Service
         }
 
         [ExcludeFromCodeCoverage]
-        public ServiceResult Delete(int id)
+        public Task<ServiceResult> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -184,7 +184,7 @@ namespace PRN222.CourseManagement.Service.Service
         }
 
         [ExcludeFromCodeCoverage]
-        public ServiceResult Update(Enrollment entity)
+        public async Task<ServiceResult> Update(Enrollment entity)
         {
             var result = new ServiceResult();
             using var transaction = _unitOfWork.BeginTransaction(); // BR24
@@ -198,9 +198,9 @@ namespace PRN222.CourseManagement.Service.Service
                 }
 
                 _unitOfWork.enrollementRepository.Update(entity);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.SaveChangeAsync();
 
-                transaction.Commit();
+                await transaction.CommitAsync();
 
                 result.IsSuccess = true;
                 result.Message = MessageHelper.EnrollmentMessages.Updated;
@@ -208,7 +208,7 @@ namespace PRN222.CourseManagement.Service.Service
             }
             catch
             {
-                transaction.Rollback();
+                await transaction.RollbackAsync();
 
                 result.IsSuccess = false;
                 result.Message = MessageHelper.EnrollmentMessages.TransactionFailed;
