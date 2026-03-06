@@ -15,6 +15,7 @@
                 </div>
                 <div class="card-body">
                     <form asp-action="Edit" method="post">
+                        @Html.AntiForgeryToken()
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
                         <input type="hidden" asp-for="StudentId" />
@@ -41,7 +42,8 @@
 
                         <div class="mb-3">
                             <label asp-for="DateOfBirth" class="form-label fw-bold">Date of Birth</label>
-                            <input asp-for="DateOfBirth" class="form-control" type="date" />
+                            <input asp-for="DateOfBirth" class="form-control" type="date"
+                                   value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" />
                             <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                         </div>
 

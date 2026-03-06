@@ -25,8 +25,13 @@ namespace PRN222.CourseManagement.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Student model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("StudentCode,FullName,Email,DateOfBirth,DepartmentId,IsActive")] Student model)
         {
+            // Remove validation for navigation properties
+            ModelState.Remove("Department");
+            ModelState.Remove("Enrollments");
+
             if (!ModelState.IsValid)
             {
                 LoadDepartments();
@@ -58,8 +63,13 @@ namespace PRN222.CourseManagement.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Student model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([Bind("StudentId,StudentCode,FullName,Email,DateOfBirth,DepartmentId,IsActive")] Student model)
         {
+            // Remove validation for navigation properties
+            ModelState.Remove("Department");
+            ModelState.Remove("Enrollments");
+
             if (!ModelState.IsValid)
             {
                 LoadDepartments();
