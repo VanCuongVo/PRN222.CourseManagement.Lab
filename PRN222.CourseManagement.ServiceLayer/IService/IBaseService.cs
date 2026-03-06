@@ -8,5 +8,6 @@ namespace PRN222.CourseManagement.Service.IService
         ServiceResult Update(T entity);
         ServiceResult Delete(int id);
         IEnumerable<T> GetAll();
+        T? GetById(int id);
     }
 }

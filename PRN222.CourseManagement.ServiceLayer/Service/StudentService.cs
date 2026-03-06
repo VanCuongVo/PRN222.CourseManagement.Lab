@@ -27,7 +27,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validateResult;
                 }
                 _unitOfWork.studentRepository.Add(entity);
-                _unitOfWork.SaveChangeAsync();
+                _unitOfWork.SaveChanges();
 
                 result.IsSuccess = true;
                 result.Message = MessageStudent.STUDENT_CREATE_SUCCESS;
@@ -87,7 +87,7 @@ namespace PRN222.CourseManagement.Service.Service
 
 
         }
- 
+
         public ServiceResult Delete(int id)
         {
             ServiceResult result = new ServiceResult();
@@ -100,6 +100,7 @@ namespace PRN222.CourseManagement.Service.Service
 
                 }
                 _unitOfWork.studentRepository.Delete(id);
+                _unitOfWork.SaveChanges();
                 result.IsSuccess = true;
                 result.Message = MessageStudent.STUDENT_DELETE_SUCCESS;
                 return result;
@@ -145,6 +146,13 @@ namespace PRN222.CourseManagement.Service.Service
         {
             return _unitOfWork.studentRepository.GetAll();
         }
+
+        [ExcludeFromCodeCoverage]
+        public Student? GetById(int id)
+        {
+            return _unitOfWork.studentRepository.GetById(id);
+        }
+
         [ExcludeFromCodeCoverage]
         public ServiceResult Update(Student entity)
         {
@@ -155,24 +163,18 @@ namespace PRN222.CourseManagement.Service.Service
                 if (!validateResult.IsSuccess)
                     return validateResult;
 
-                var student = _unitOfWork.studentRepository
-                    .GetById(entity.StudentId);
-
-                if (student == null)
+                // Check if student exists using Exists (no tracking)
+                bool exists = _unitOfWork.studentRepository.Exists(s => s.StudentId == entity.StudentId);
+                if (!exists)
                 {
-                   result.IsSuccess=false;
-                   result.Message = MessageStudent.STUDENT_NOT_FOUND;
-                   return result;
+                    result.IsSuccess = false;
+                    result.Message = MessageStudent.STUDENT_NOT_FOUND;
+                    return result;
                 }
 
-
-                // Update fields
-                student.FullName = entity.FullName;
-                student.Email = entity.Email;
-                student.DepartmentId = entity.DepartmentId;
-
-                _unitOfWork.studentRepository.Update(student);
-                _unitOfWork.SaveChangeAsync();
+                // Update the entity directly
+                _unitOfWork.studentRepository.Update(entity);
+                _unitOfWork.SaveChanges();
 
                 result.IsSuccess = true;
                 result.Message = MessageStudent.STUDENT_UPDATE_SUCCESS;
@@ -183,19 +185,21 @@ namespace PRN222.CourseManagement.Service.Service
                 result.IsSuccess = false;
                 result.Message = ex.Message;
             }
-            return result ;
+            return result;
 
         }
         [ExcludeFromCodeCoverage]
         private ServiceResult ValidateStudentForUpdate(Student entity)
         {
             var result = new ServiceResult();
+
+            // Check StudentCode duplicate (exclude current student)
             bool duplicatedCode = _unitOfWork.studentRepository
-       .Exists(s => s.StudentId != entity.StudentId);
+                .Exists(s => s.StudentCode == entity.StudentCode && s.StudentId != entity.StudentId);
             if (duplicatedCode)
             {
                 result.IsSuccess = false;
-                result.Message = MessageStudent.STUDENT_NOT_FOUND;
+                result.Message = MessageStudent.STUDENT_CODE_DUPLICATED;
                 return result;
             }
 
@@ -213,7 +217,9 @@ namespace PRN222.CourseManagement.Service.Service
                 return result;
             }
 
-            var isExistByEmail = _unitOfWork.studentRepository.Exists(s => s.Email == entity.Email);
+            // Check Email duplicate (exclude current student)
+            var isExistByEmail = _unitOfWork.studentRepository
+                .Exists(s => s.Email == entity.Email && s.StudentId != entity.StudentId);
             if (isExistByEmail)
             {
                 result.IsSuccess = false;

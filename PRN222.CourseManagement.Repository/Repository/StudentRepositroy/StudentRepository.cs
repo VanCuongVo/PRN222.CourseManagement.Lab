@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using PRN222.CourseManagement.Repository.IRepository.StudentRepository;
 using PRN222.CourseManagement.Repository.Models;
 using PRN222.CourseManagement.Repository.Repository.GenericRepository;
@@ -11,5 +12,6 @@ namespace PRN222.CourseManagement.Repository.Repository.StudentRepositroy
         public StudentRepository(CourseManagementDbContext courseManagementDbContext) : base(courseManagementDbContext)
         {
         }
+
     }
 }

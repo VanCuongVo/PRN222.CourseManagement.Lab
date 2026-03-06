@@ -9,6 +9,7 @@ namespace PRN222.CourseManagement.Repository.IUnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         Task SaveChangeAsync();
+        void SaveChanges();
         IStudentRepository studentRepository { get; set; }
         IEnrollementRepository enrollementRepository { get; set; }
         IDepartmentRepository departmentRepository { get; set; }

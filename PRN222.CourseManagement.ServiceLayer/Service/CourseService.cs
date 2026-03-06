@@ -18,7 +18,7 @@ namespace PRN222.CourseManagement.Service.Service
 
         public ServiceResult Create(Course entity)
         {
-            var result = new ServiceResult();   
+            var result = new ServiceResult();
             try
             {
                 var validateResult = ValidateCourseForCreate(entity);
@@ -26,7 +26,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validateResult;
 
                 _unitOfWork.courseRepository.Add(entity);
-                _unitOfWork.SaveChangeAsync();
+                _unitOfWork.SaveChanges();
 
                 result.IsSuccess = true;
                 result.Message = MessageCourse.COURSE_CREATE_SUCCESS;
@@ -81,7 +81,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validateResult;
 
                 _unitOfWork.courseRepository.Delete(id);
-                _unitOfWork.SaveChangeAsync();
+                _unitOfWork.SaveChanges();
                 result.IsSuccess = true;
                 result.Message = MessageCourse.COURSE_DELETE_SUCCESS;
                 return result;
@@ -154,7 +154,7 @@ namespace PRN222.CourseManagement.Service.Service
                 course.DepartmentId = entity.DepartmentId;
 
                 _unitOfWork.courseRepository.Update(course);
-                _unitOfWork.SaveChangeAsync();
+                _unitOfWork.SaveChanges();
 
                 result.IsSuccess = true;
                 result.Message = MessageHelper.MessageCourse.COURSE_UPDATE_SUCCESS;
@@ -200,6 +200,12 @@ namespace PRN222.CourseManagement.Service.Service
 
             return result;
 
+        }
+
+        [ExcludeFromCodeCoverage]
+        public Course? GetById(int id)
+        {
+            return _unitOfWork.courseRepository.GetById(id);
         }
     }
 }

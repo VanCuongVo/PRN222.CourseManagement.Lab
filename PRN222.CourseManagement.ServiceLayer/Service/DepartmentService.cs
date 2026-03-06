@@ -26,7 +26,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validate;
                 }
                 _unitOfWork.departmentRepository.Add(entity);
-                _unitOfWork.SaveChangeAsync();
+                _unitOfWork.SaveChanges();
                 result.IsSuccess = true;
                 result.Message = MessageHelper.DepartmentMessages.Created;
                 return result;
@@ -34,8 +34,8 @@ namespace PRN222.CourseManagement.Service.Service
             }
             catch (Exception ex)
             {
-                result.IsSuccess = false;   
-                result.Message = ex.Message;    
+                result.IsSuccess = false;
+                result.Message = ex.Message;
             }
             return result;
         }
@@ -61,7 +61,7 @@ namespace PRN222.CourseManagement.Service.Service
             if (entity.Name.Trim().Length < 3)
             {
                 result.IsSuccess = false;
-                result.Message= MessageHelper.DepartmentMessages.NameTooShort; 
+                result.Message = MessageHelper.DepartmentMessages.NameTooShort;
                 return result;
             }
 
@@ -79,7 +79,7 @@ namespace PRN222.CourseManagement.Service.Service
                     return validate;
                 }
                 _unitOfWork.departmentRepository.Delete(id);
-                _unitOfWork.SaveChangeAsync();
+                _unitOfWork.SaveChanges();
 
                 result.IsSuccess = true;
                 result.Message = MessageHelper.DepartmentMessages.Deleted;
@@ -135,8 +135,15 @@ namespace PRN222.CourseManagement.Service.Service
         [ExcludeFromCodeCoverage]
         public IEnumerable<Department> GetAll()
         {
-            throw new NotImplementedException();
+            return _unitOfWork.departmentRepository.GetAll();
         }
+
+        [ExcludeFromCodeCoverage]
+        public Department? GetById(int id)
+        {
+            return _unitOfWork.departmentRepository.GetById(id);
+        }
+
         [ExcludeFromCodeCoverage]
         public ServiceResult Update(Department entity)
         {
@@ -161,9 +168,9 @@ namespace PRN222.CourseManagement.Service.Service
                 // Update field cần thiết
                 department.Name = entity.Name.Trim();
                 department.Description = entity.Description.Trim();
-              
+
                 _unitOfWork.departmentRepository.Update(entity);
-                _unitOfWork.SaveChangeAsync();
+                _unitOfWork.SaveChanges();
                 result.IsSuccess = true;
                 result.Message = MessageHelper.DepartmentMessages.Updated;
                 return result;

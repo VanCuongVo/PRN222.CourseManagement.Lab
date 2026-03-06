@@ -148,7 +148,7 @@ namespace PRN222.CourseManagement.Service.Service
                 }
 
                 _unitOfWork.enrollementRepository.Add(entity);
-                _unitOfWork.SaveChangeAsync(); // nếu async → nên await
+                _unitOfWork.SaveChanges();
 
                 transaction.Commit(); // commit SAU khi save OK
 
@@ -174,8 +174,15 @@ namespace PRN222.CourseManagement.Service.Service
         [ExcludeFromCodeCoverage]
         public IEnumerable<Enrollment> GetAll()
         {
-          return _unitOfWork.enrollementRepository.GetAll();    
+            return _unitOfWork.enrollementRepository.GetAll();
         }
+
+        [ExcludeFromCodeCoverage]
+        public Enrollment? GetById(int id)
+        {
+            return _unitOfWork.enrollementRepository.GetById(id);
+        }
+
         [ExcludeFromCodeCoverage]
         public ServiceResult Update(Enrollment entity)
         {
@@ -191,7 +198,7 @@ namespace PRN222.CourseManagement.Service.Service
                 }
 
                 _unitOfWork.enrollementRepository.Update(entity);
-                _unitOfWork.SaveChangeAsync();
+                _unitOfWork.SaveChanges();
 
                 transaction.Commit();
 
