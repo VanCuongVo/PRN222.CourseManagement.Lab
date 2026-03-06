@@ -47,7 +47,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void TC26_Enroll_Student_Under_18_Should_Fail()
+        public async Task TC26_Enroll_Student_Under_18_Should_Fail()
         {
             // Arrange
             var student = new Student
@@ -98,7 +98,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(3);
 
             //Act 
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
             //Assert
 
@@ -107,7 +107,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void TC27_Enroll_Course_With_Zero_Credit_Should_Fail()
+        public async Task TC27_Enroll_Course_With_Zero_Credit_Should_Fail()
         {
             //Arrange
             var student = new Student
@@ -153,7 +153,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(false);
 
             //Act
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
 
             Assert.IsFalse(result.IsSuccess);
@@ -161,7 +161,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void TC28_Enroll_Inactive_Course_Should_Fail()
+        public async Task TC28_Enroll_Inactive_Course_Should_Fail()
         {
             //Arrange
             var student = new Student
@@ -207,7 +207,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(false);
 
             //Act
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
 
 
             Assert.IsFalse(result.IsSuccess);
@@ -216,7 +216,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void TC29_Enroll_Inactive_Student_Should_Fail()
+        public async Task TC29_Enroll_Inactive_Student_Should_Fail()
         {
             //Arrange
             var student = new Student
@@ -262,13 +262,13 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(false);
 
             //Act
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual("Student is inactive", result.Message);
 
         }
         [Test]
-        public void TC30_Assign_Grade_Outside_Grading_Period_Should_Fail()
+        public async Task TC30_Assign_Grade_Outside_Grading_Period_Should_Fail()
         {
             //Arrange
             var student = new Student
@@ -314,7 +314,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(false);
 
             //Act
-            var result = _enrollmentService.Create(enrollment);
+            var result = await _enrollmentService.Create(enrollment);
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(EnrollmentMessages.GradingPeriodExpired, result.Message);
         }

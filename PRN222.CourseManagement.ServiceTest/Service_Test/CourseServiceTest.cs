@@ -36,7 +36,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_CourseCodeDuplicated_Fail()
+        public async Task Create_CourseCodeDuplicated_Fail()
         {
             var course = new Course
             {
@@ -49,7 +49,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Course, bool>>>()))
                 .Returns(true);
 
-            var result = _courseService.Create(course);
+            var result = await _courseService.Create(course);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -60,7 +60,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void Create_Course_DepartmentNotExist_Fail()
+        public async Task Create_Course_DepartmentNotExist_Fail()
         {
             var course = new Course
             {
@@ -77,7 +77,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Department, bool>>>()))
                 .Returns(false);
 
-            var result = _courseService.Create(course);
+            var result = await _courseService.Create(course);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -87,7 +87,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_Course_InvalidCredits_Fail()
+        public async Task Create_Course_InvalidCredits_Fail()
         {
             var course = new Course
             {
@@ -102,7 +102,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
             _deptRepoMock.Setup(r => r.Exists(It.IsAny<Expression<Func<Department, bool>>>()))
                 .Returns(true);
-            var result = _courseService.Create(course);
+            var result = await _courseService.Create(course);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -112,7 +112,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_Course_Success()
+        public async Task Create_Course_Success()
         {
             var course = new Course
             {
@@ -129,7 +129,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Department, bool>>>()))
                 .Returns(true);
 
-            var result = _courseService.Create(course);
+            var result = await _courseService.Create(course);
 
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(
@@ -139,7 +139,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Delete_Course_HasEnrollments_Fail()
+        public async Task Delete_Course_HasEnrollments_Fail()
         {
             int courseId = 1;
 
@@ -151,7 +151,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Enrollment, bool>>>()))
                 .Returns(true);
 
-            var result = _courseService.Delete(courseId);
+            var result = await _courseService.Delete(courseId);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -161,7 +161,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Delete_Courrse_HasEnrollments_Success()
+        public async Task Delete_Courrse_HasEnrollments_Success()
         {
             int courseId = 1;
 
@@ -173,7 +173,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Enrollment, bool>>>()))
                 .Returns(false);
 
-            var result = _courseService.Delete(courseId);
+            var result = await _courseService.Delete(courseId);
 
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(

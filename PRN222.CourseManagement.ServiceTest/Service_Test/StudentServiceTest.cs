@@ -36,7 +36,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_StudentCodeDuplicated_Fail()
+        public async Task Create_StudentCodeDuplicated_Fail()
         {
             // Arrange
             var student = new Student
@@ -50,7 +50,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
              u.Exists(It.IsAny<Expression<Func<Student, bool>>>()))
             .Returns(true);
             // Act
-            var result = _studentService.Create(student);
+            var result = await _studentService.Create(student);
 
             // Assert
             Assert.IsFalse(result.IsSuccess);
@@ -60,7 +60,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void Create_FullNameEmpty_Fail()
+        public async Task Create_FullNameEmpty_Fail()
         {
             var student = new Student
             {
@@ -73,7 +73,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 u.Exists(It.IsAny<Expression<Func<Student, bool>>>()))
                 .Returns(false);
 
-            var result = _studentService.Create(student);
+            var result = await _studentService.Create(student);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -83,7 +83,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_FullNameTooShort_Fail()
+        public async Task Create_FullNameTooShort_Fail()
         {
             var student = new Student
             {
@@ -96,7 +96,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 u.Exists(It.IsAny<Expression<Func<Student, bool>>>()))
                 .Returns(false);
 
-            var result = _studentService.Create(student);
+            var result = await _studentService.Create(student);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -106,7 +106,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_EmailDuplicated_Fail()
+        public async Task Create_EmailDuplicated_Fail()
         {
             var student = new Student
             {
@@ -121,7 +121,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(false) // StudentCode
                 .Returns(true); // Email
 
-            var result = _studentService.Create(student);
+            var result = await _studentService.Create(student);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -132,7 +132,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void Create_DepartmentNotExist_Fail()
+        public async Task Create_DepartmentNotExist_Fail()
         {
             var student = new Student
             {
@@ -149,7 +149,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 u.Exists(It.IsAny<Expression<Func<Department, bool>>>()))
                 .Returns(false);
 
-            var result = _studentService.Create(student);
+            var result = await _studentService.Create(student);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -159,7 +159,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Create_Student_SuccessFull()
+        public async Task Create_Student_SuccessFull()
         {
             // Arrange
             var student = new Student
@@ -180,7 +180,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(true);
 
             // Act
-            var result = _studentService.Create(student);
+            var result = await _studentService.Create(student);
 
             // Assert
             Assert.IsTrue(result.IsSuccess);
@@ -191,7 +191,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Delete_Student_HasEnrollments_Fail()
+        public async Task Delete_Student_HasEnrollments_Fail()
         {
             // Arrange
             int studentId = 1;
@@ -205,7 +205,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
             // Act
-            var result = _studentService.Delete(studentId);
+            var result = await _studentService.Delete(studentId);
             // Assert
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -215,7 +215,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Delete_Student_NoEnrollments_Success()
+        public async Task Delete_Student_NoEnrollments_Success()
         {
             int studentId = 1;
             _studentRepoMock
@@ -225,7 +225,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
             _enrollmentRepoMock
                 .Setup(r => r.Exists(It.IsAny<Expression<Func<Enrollment, bool>>>()))
                 .Returns(false); // không có enrollment
-            var result = _studentService.Delete(studentId);
+            var result = await _studentService.Delete(studentId);
 
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(

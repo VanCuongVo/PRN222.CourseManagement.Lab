@@ -35,7 +35,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void TC01_Create_Department_With_Duplicate_Name_Should_Fail()
+        public async Task TC01_Create_Department_With_Duplicate_Name_Should_Fail()
         {
             // Arrange
             var dept = new Department { Name = "SE" };
@@ -44,7 +44,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         .Returns(true);
 
             // Act
-            var result = _service.Create(dept);
+            var result = await _service.Create(dept);
             // Assert
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(Service.MessageHelper.DepartmentMessages.NameExists, result.Message);
@@ -53,7 +53,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void TC02_Create_Department_With_Short_Name_Should_Fail()
+        public async Task TC02_Create_Department_With_Short_Name_Should_Fail()
         {
             // Arrange
             var dept = new Department { Name = "IT" }; // < 3 ký tự
@@ -63,7 +63,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
       .Returns(false);
 
             // Act
-            var result = _service.Create(dept);
+            var result = await _service.Create(dept);
 
             // Assert
             Assert.IsFalse(result.IsSuccess);
@@ -73,7 +73,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         }
 
         [Test]
-        public void Delete_Department_With_Students_Should_Fail()
+        public async Task Delete_Department_With_Students_Should_Fail()
         {
             // Arrange
             int deptId = 1;
@@ -87,7 +87,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
                 .Returns(true);
 
             // Act
-            var result = _service.Delete(deptId);
+            var result = await _service.Delete(deptId);
 
             // Assert
             Assert.IsFalse(result.IsSuccess);
@@ -101,7 +101,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void TC04_Delete_Department_With_Courses_Should_Fail()
+        public async Task TC04_Delete_Department_With_Courses_Should_Fail()
         {
             // Arrange
             int deptId = 2;
@@ -117,7 +117,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
               .Setup(r => r.Exists(It.IsAny<Expression<Func<Course, bool>>>())).Returns(true);
 
             // Act
-            var result = _service.Delete(deptId);
+            var result = await _service.Delete(deptId);
 
             // Assert
             Assert.IsFalse(result.IsSuccess);
@@ -128,13 +128,13 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void Delete_Department_Not_Found_Should_Fail()
+        public async Task Delete_Department_Not_Found_Should_Fail()
         {
             _deptRepoMock
                 .Setup(r => r.GetById(It.IsAny<int>()))
                 .Returns((Department)null);
 
-            var result = _service.Delete(99);
+            var result = await _service.Delete(99);
 
             Assert.IsFalse(result.IsSuccess);
             Assert.AreEqual(
@@ -146,7 +146,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
 
 
         [Test]
-        public void Create_Department_Valid_Should_Succeed()
+        public async Task Create_Department_Valid_Should_Succeed()
         {
             var dept = new Department { Name = "Software Engineering" };
 
@@ -155,7 +155,7 @@ namespace PRN222.CourseManagement.ServiceTest.Service_Test
         .Returns(false);
 
 
-            var result = _service.Create(dept);
+            var result = await _service.Create(dept);
 
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(Service.MessageHelper.DepartmentMessages.Created, result.Message);
