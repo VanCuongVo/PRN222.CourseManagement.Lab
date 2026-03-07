@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PRN222.CourseManagement.Repository.Models;
 using PRN222.CourseManagement.Service.IService;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PRN222.CourseManagement.Web.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public class StudentController : Controller
     {
 
